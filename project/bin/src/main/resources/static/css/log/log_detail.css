@@ -1,0 +1,446 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+
+  font-family: 'Pretendard';
+}
+.fa-eye, .fa-flag-checkered{
+  font-family: "Font Awesome 5 Free";
+}
+.container {
+  max-width: 1400px;
+  width: 80%;
+  margin: 0 auto;
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-size: 1rem;
+}
+.container > a:first-child {
+  margin-bottom: 18px;
+  text-align: center;
+  line-height: 20px;
+  display: inline-block;
+  padding: 10px 15px;
+  color: white;
+  text-decoration: none;
+  background-color: #0079FF;
+  width: 130px;
+  height: 40px;
+  border-radius: 12px;
+  transition: background-color 0.3s;
+}
+.container > a:first-child:hover {
+  background-color: #0056b3;
+}
+
+.post-header {
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+.post-header h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.post-meta {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.post-meta div {
+  display: flex;
+  justify-content: space-between;
+}
+.post-meta span {
+  font-size: 0.9rem;
+}
+
+#company-span,
+#user-company-span{
+  display: inline-block;
+  background-color: #eef4ff; /* 연한 파랑 배경 */
+  color: #2b73ec;             /* 강조 텍스트 색상 */
+  font-size: 0.8em;
+  font-weight: 500;
+  padding: 2px 4px;
+  border-radius: 6px;
+  vertical-align: middle;
+}
+
+#company-span{
+  background-color:#f2f2f2;
+  color:#333;
+  padding:4px 8px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.val-label {
+  border-radius: 10px;
+  padding: 4px 12px;
+  background-color: #f2f2f2;
+}
+ label{
+  color : #343a40;
+  font-size: 0.9rem;
+ }
+.fa-circle-check {
+  color: gold;
+  font-weight: 500;
+  margin-right: 6px;
+}
+
+.log-info {
+  color: #666;
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+}
+.log-info i {
+  margin-right: 5px;
+}
+
+.post-body {
+  padding: 16px 16px 38px 16px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.post-body > div:nth-child(2) {
+  padding: 10px;
+  min-height: 200px;
+}
+
+.tag-area {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px;
+}
+.tag-component {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 15px;
+  margin: 10px;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08);
+  color: #2c3e50;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+.tag-component:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+.tag-component.selected {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: white;
+  border: none;
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+}
+
+.post-val {
+  margin-top: 20px;
+  padding: 16px 20px;
+}
+.post-val span,
+.title3 {
+  display: block;
+  font-weight: 700;
+  font-size: 15px;
+  color: #333;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.post-val div {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.8;
+  color: #333;
+  background: linear-gradient(135deg, #9cc3ff, #b3e5fc);
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  margin-top: 20px;
+  min-height: 100px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.post-val div::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 30px;
+  border-width: 0 10px 10px 10px;
+  border-style: solid;
+  border-color: transparent transparent #9cc3ff transparent;
+}
+
+img{
+  max-width: 100%;
+  max-height: 800px;
+}
+
+.report {
+  float: right;
+  margin-top: 10px;
+  border: none;
+  background-color: transparent;
+}
+#log-edit-btn-area{
+  margin-top: 20px;
+  margin-left:30px;
+}
+.comments-title {
+  font-weight: bold;
+  font-size: 18px;
+  padding-top: 20px;
+}
+
+.comment {
+  background-color: #f1f1f1;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 8px;
+  border-bottom: 1px solid #ddd;
+}
+.reply {
+  margin-left: 30px;
+}
+
+.parent-comment-user-id {
+  color: #ddd;
+  margin: 0 3px;
+}
+
+.comment-author {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.comment-text-area {
+  display: flex;
+  flex-direction: column;
+}
+.comment-text{
+  font-size: 0.9rem;
+}
+.parent-comment-nickname{
+  color: #818181;
+}
+.edit-btn,
+.del-btn,
+.reply-btn {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 0 4px;
+  min-width: 60px;
+}
+
+/* 각각의 배경색 */
+.edit-btn {
+  background-color: #61db75;
+}
+
+.del-btn {
+  background-color: #ff4d4f;
+}
+
+.reply-btn {
+  background-color: #0079FF;
+}
+
+/* hover 효과 */
+.comment-edit{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: auto;
+
+}
+
+.edit-btn:hover {
+  background-color: #4ac761;
+}
+
+.del-btn:hover {
+  background-color: #e5393c;
+}
+
+.reply-btn:hover {
+  background-color: #0066cc;
+}
+
+.edit-btn:active,
+.del-btn:active,
+.reply-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.comment-form {
+  margin-top: 20px;
+  display: flex;
+  gap: 8px;
+}
+
+.comment-form input {
+  flex: 1;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 12px;
+  border: 1px solid #7a7a7a;
+}
+
+.comment-form button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 11px;
+  cursor: pointer;
+  width:8%;
+}
+.comment-form button:hover {
+  background-color: #0056b3;
+}
+
+.comment-edit-area{
+  padding: 5px;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+  width:100%;
+}
+.comment-edit-area textarea{
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  resize: vertical;  
+  font-family: inherit;
+}
+.comment-edit-area button {
+  margin-top: 10px;
+  padding: 6px 12px;
+  font-size: 13px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.comment-edit-area button:first-of-type {
+    background-color: #007bff;
+    color: white;
+}
+
+.comment-edit-area button:first-of-type:hover {
+    background-color: #0056b3;
+}
+
+.comment-edit-area button:last-of-type {
+    background-color: #6c757d;
+    color: white;
+}
+
+.comment-edit-area button:last-of-type:hover {
+    background-color: #5a6268;
+}
+/*log_write*/
+#form{
+  display: flex;
+  flex-direction: column;
+  gap:30px;
+}
+input[name="title"]{
+  min-height: 60px;
+  font-size: 20px;
+  color: black;
+}
+input[name="title"]::placeholder {
+  color: #ddd; 
+}
+#form>div:nth-child(3){
+  display: flex;
+  flex-direction: row;
+  gap:40px;
+  align-items: center;
+}
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.checkbox-row>label{
+  font-weight: 600;
+}
+.checkbox-desc {
+  font-size: 0.7em;
+  color: #666;
+  margin-top: 2px;
+}
+#form>div:nth-child(3) input{
+  margin-right: 10px;
+}
+#form>div:nth-child(5),
+#form>div:nth-child(6){
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.companyName{
+  width: 250px !important;
+}
+
+textarea{
+  resize: none;
+}
+.submit-btn{
+  line-height: 20px;
+  display: inline-block;
+  padding: 10px 15px;
+  color: white;
+  text-decoration: none;
+  background-color: #0079FF;
+  height: 40px;
+  border-radius: 12px;
+  border:none;
+  transition: background-color 0.3s;
+  margin: 30px 0;
+}
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+/* 신고하기 모달 */
+.report-reason-item {
+  margin-bottom: 0.5rem;
+}
+.report-reason-item label {
+  font-weight: normal;
+  margin-left: 0.5rem;
+  font-size: 1rem;
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.exitlog.mypage.mapper.MypageMapper">
+
+	<select id="MyPageInfo" resultType="User">
+		SELECT user_no, user_id, password, nickname, email, company_name
+		FROM user
+		where user_no =#{user_no};
+	</select>
+
+	<select id="countNickname" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM user
+		WHERE nickname = #{nickname}
+	</select>
+
+	<update id="updateUserPasswordInDB">
+		UPDATE user SET password = #{newPassword} WHERE user_no = #{userNo}
+	</update>
+	 
+	<update id="deleteUser" parameterType="int">
+        UPDATE user
+        SET is_del = 1
+        WHERE user_no = #{userNo}
+    </update>
+<select id="countEmailExcludingCurrentUser" resultType="int">
+        SELECT COUNT(*)
+        FROM user
+        WHERE email = #{email} AND user_no != #{userNo}
+    </select>
+
+    <update id="updateUserEmailInDB">
+        UPDATE user
+        SET email = #{newEmail}
+        WHERE user_no = #{userNo}
+    </update>
+    
+    <update id="updateUserNicknameInDB">
+        UPDATE user SET nickname = #{newNickname} WHERE user_no = #{userNo}
+    </update>
+    
+    
+    <insert id="insertEmploymentCertificate" parameterType="com.exitlog.admin.model.entity.EmploymentCertificate"> 
+    INSERT INTO employment_certificate (
+            user_no,
+            company_name,
+            file_path,
+            upload_date,
+            update_date,
+            status
+        ) VALUES (
+            #{userNo},
+            #{companyName},
+            #{filePath},
+            #{uploadDate},
+            #{updateDate},
+            #{status}
+        )
+        </insert>
+
+<select id="countPendingEmploymentCertificates" parameterType="int" resultType="int">
+    SELECT COUNT(*)
+    FROM employment_certificate
+    WHERE user_no = #{userNo} AND status = 'PENDING'
+</select>
+
+</mapper>

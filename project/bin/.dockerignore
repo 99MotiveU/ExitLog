@@ -1,0 +1,15 @@
+# .dockerignore
+.git
+.gitignore
+.mvn/wrapper/
+mvnw
+mvnw.cmd
+# Maven 빌드 결과 폴더 (이 폴더 자체를 제외하여 .jar 파일만 복사되도록 함)
+#target/
+# Gradle 프로젝트의 경우 build/
+build/
+*.log
+*.iml
+.idea/
+.vscode/
+tmp/

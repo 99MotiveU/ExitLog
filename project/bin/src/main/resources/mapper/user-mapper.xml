@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.exitlog.login.mapper.UserMapper">
+
+	<resultMap id="userResultMap" type="com.exitlog.login.model.entity.User">
+		<id property="userNo" column="user_no"/> <result property="userId" column="user_id"/>
+		<result property="password" column="password"/>
+		<result property="nickname" column="nickname"/>
+		<result property="email" column="email"/>
+		<result property="createdDate" column="created_date"/>
+		<result property="isDel" column="is_del"/> <result property="role" column="role"/>
+		<result property="companyName" column="company_name"/>
+	</resultMap>
+	<select id="findByUserIdAndPassword" resultMap="userResultMap"> SELECT user_no, user_id, password, nickname, email, is_del, role, company_name FROM user
+		WHERE user_id = #{userId} AND password = #{password}
+	</select>
+
+	<select id="findByUserId" resultMap="userResultMap"> SELECT user_no, user_id, password, nickname, email, is_del, role, company_name FROM user
+		WHERE user_id = #{userId}
+	</select>
+
+	<select id="findByNickname" resultMap="userResultMap"> SELECT user_no, user_id, password, nickname, email, is_del, role, company_name FROM user
+		WHERE nickname = #{nickname}
+	</select>
+
+	<select id="findByEmail" resultMap="userResultMap"> SELECT user_no, user_id, password, nickname, email, is_del, role, company_name FROM user
+		WHERE email = #{email}
+	</select>
+	
+	<select id="findBylogNo" parameterType="int" resultType="int">
+		SELECT U.USER_NO
+		FROM user U
+		JOIN log L ON L.USER_NO = U.USER_NO
+		WHERE L.LOG_NO = #{logNo}
+	</select>
+
+	<insert id="save" parameterType="User" useGeneratedKeys="true"
+		keyProperty="userNo">
+		INSERT INTO user (user_id, password, nickname, email, created_date, is_del, role, company_name) VALUES (#{userId}, #{password}, #{nickname}, #{email}, now(), #{is_del}, #{role}, #{companyName})
+	</insert>
+
+	<update id="updatePassword" parameterType="User">
+		UPDATE user
+		SET
+		password = #{password}
+		WHERE
+		user_id = #{userId}
+	</update>
+
+	<select id="findByUserIdAndEmail" resultMap="userResultMap"> SELECT user_no, user_id, password, nickname, email, is_del, role, company_name FROM user
+		WHERE user_id = #{userId} AND email = #{email}
+	</select>
+	
+	<select id="getRole" parameterType="int" resultType="int">
+		SELECT role FROM user WHERE user_no =#{userNo}
+	</select>
+	
+</mapper>

@@ -1,0 +1,1139 @@
+/* Container - Specific to the main content layout on mypage */
+.container {
+	max-width: 1200px;
+	width: 80%;
+	padding: 0 20px;
+	margin: 30px auto;
+	padding-bottom: 80px;
+	/* Fixed pagination을 위한 하단 여백 추가 */
+}
+
+
+
+/* Content Sections for JavaScript-driven tabs */
+
+
+/* mypage_content_section도 기본적으로 숨김 */
+
+
+.mypage-content-section.active {
+	display: block;
+	/* <-- 보일 때는 block으로 변경! (애니메이션 전에) */
+	visibility: visible;
+	opacity: 1;
+	min-height: 600px;
+	/* 충분히 큰 값으로 설정 */
+	padding: 20px;
+	/* 원래 패딩으로 돌아오도록 함 */
+	overflow: visible;
+	/* 내용이 보이도록 함 */
+}
+
+.no-logs-message {
+	text-align: center;
+}
+
+.modal {
+	display: flex;
+	/* Flexbox를 사용하여 중앙 정렬 */
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	/* 고정 위치 */
+	z-index: 1000;
+	/* 다른 요소 위에 오도록 */
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	/* 반투명 배경 */
+}
+
+.modal.hidden {
+	display: none;
+	/* hidden 클래스가 있으면 숨김 (모달에는 이 방식이 적합) */
+}
+
+
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 2vw;
+	border: 1px solid #888;
+	border-radius: 8px;
+	width: 30vw;
+	max-width: 400px;
+	box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.2);
+	text-align: center;
+	position: relative;
+	box-sizing: border-box;
+}
+
+btn-danger {
+    background-color: #dc3545; /* Bootstrap 4의 기본 danger 색상 */
+    color: white;
+}
+.btn-danger:hover {
+    background-color: #c82333; /* hover 시 약간 어둡게 */
+}
+/* .btn-secondary도 확인 (아니요 버튼) */
+.btn-secondary {
+    background-color: #6c757d; /* Bootstrap 4의 기본 secondary 색상 */
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* 모달 제목 및 본문 텍스트 크기도 조절할 수 있습니다 (선택 사항) */
+.modal-content h2 {
+    font-size: 24px; /* 기존 20px에서 증가 */
+    margin-bottom: 2vw; /* 간격 조정 */
+}
+
+.modal-content p {
+    font-size: 16px; /* 기존 14px에서 증가 */
+    margin-bottom: 2vw; /* 간격 조정 */
+}
+.no-log-message {
+    text-align: center;
+    padding: 50px 20px;
+    color: #666;
+    font-size: 1.1em;
+    margin-top: 30px;
+    
+    /* 필요에 따라 높이, 너비, 여백 등 조정 */
+}
+.modal-content input[type="password"] {
+	width: calc(100% - 2vw);
+	padding: 10px;
+	margin-bottom: 1.5vw;
+	border-radius: 8px;
+	border-width: 1px;
+	font-size: 14px;
+	box-sizing: border-box;
+}
+
+.modal-content button {
+	background-color: #1A73E8;
+	/* 기존 색상 유지 (Google Material Blue 500) */
+	color: white;
+	/* 텍스트 색상 */
+	font-family: 'Noto Sans KR', sans-serif;
+	/* 한국어 폰트 추가 (필요 시) */
+	font-size: 12px;
+	/* 약간 키워서 가독성 향상 */
+	font-weight: 500;
+	/* Medium 볼드니스 */
+	line-height: 1.5;
+	/* 텍스트 라인 높이 */
+
+	/* 크기 및 형태 */
+	padding: 12px 24px;
+	/* 상하/좌우 패딩 조정 (크기 키움) */
+	border: none;
+	/* 테두리 없음 */
+	border-radius: 8px;
+	/* 둥근 모서리 유지 */
+	min-width: 100px;
+	/* 최소 너비 설정 (텍스트가 짧아도 보기 좋게) */
+	display: inline-flex;
+	/* 텍스트와 아이콘 정렬을 위해 (추후 아이콘 추가 시) */
+	align-items: center;
+	justify-content: center;
+	/* 수직 중앙 정렬 */
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+
+
+.modal-content button:hover {
+	background-color: #0d47a1;
+}
+
+#secessiondeleteButton{
+	background-color:#aaa;
+	 
+}
+
+/*
+    재직 인증 모달 (#employmentVerificationModal) 전용 스타일
+    다른 모달에 영향을 주지 않으면서 재직 인증 모달의 배경과 위치를 조정합니다.
+*/
+#employmentVerificationModal {
+	/* 배경의 투명도를 더 높여 더 어둡게 만듭니다. (두 번째 사진과 유사하게) */
+	background-color: rgba(0, 0, 0, 0.4);
+	/* 0.6 또는 0.7 정도로 조절해보세요 */
+
+	/* 모달의 세로 위치를 조정합니다. */
+	/* 현재 .modal에 justify-content: center; align-items: center; 가 적용되어 중앙에 있습니다.
+       만약 조금 더 위에서 아래로 내려오게 하고 싶다면,
+       .modal-content에 margin-top을 주거나,
+       #employmentVerificationModal의 align-items를 flex-start로 바꾸고 padding-top을 줄 수 있습니다.
+       여기서는 .modal-content에 margin-top을 주는 방식을 추천합니다.
+    */
+	/* align-items: flex-start; */
+	/* 이 줄을 추가하고 아래 margin-top과 함께 사용 */
+	/* padding-top: 15vh; */
+	/* 이 줄을 추가하고 위 align-items와 함께 사용 */
+}
+
+/* 재직 인증 모달 내부의 콘텐츠 영역 (#employmentVerificationModal .modal-content) 스타일 */
+#employmentVerificationModal .modal-content {
+	padding: 2.5vw;
+	/* 패딩을 약간 늘려 여백을 더 줄 수 있습니다 (선택 사항) */
+	border-radius: 10px;
+	/* 모서리를 좀 더 둥글게 (선택 사항) */
+	max-width: 450px;
+	/* max-width를 조금 늘려 더 넓게 보이게 할 수도 있습니다. */
+	box-shadow: 0 0.8vw 1.5vw rgba(0, 0, 0, 0.3);
+	/* 그림자를 더 진하고 넓게 (선택 사항) */
+
+}
+
+
+/*
+    재직 인증 모달 내부의 각 입력 필드 행 스타일 (선택 사항, 필요에 따라 추가)
+    이 부분은 HTML에 .modal-form-row, .modal-label, .modal-input-display, .modal-input 등이
+    '재직 인증하기' 모달에만 있는 고유한 클래스라면 기존 .modal-content 하위의 스타일과 통합하거나
+    고유한 클래스 이름을 붙여주어 중복을 피하는 것이 좋습니다.
+    만약 이 스타일이 다른 모달에도 적용되어야 한다면, 이 부분은 그대로 두거나 범용 클래스로 분리해야 합니다.
+    일단 '재직 인증하기' 모달에만 고유하다고 가정하고 #employmentVerificationModal 하위에 넣습니다.
+*/
+#employmentVerificationModal .modal-form-row {
+	display: flex;
+	align-items: center;
+	margin-bottom: 15px;
+	/* 각 행 아래에 여백 추가 */
+	flex-wrap: wrap;
+	/* 작은 화면에서 요소가 줄바꿈되도록 */
+}
+
+#employmentVerificationModal .modal-label {
+	flex: 0 0 100px;
+	/* 라벨 너비 고정 */
+	text-align: left;
+	/* 라벨 텍스트 왼쪽 정렬 */
+	font-weight: bold;
+	color: #333;
+	font-size: 15px;
+	padding-right: 10px;
+	/* 라벨과 입력 필드 사이 여백 */
+	box-sizing: border-box;
+	/* 패딩이 너비에 포함되도록 */
+}
+
+#employmentVerificationModal .modal-input-display,
+#employmentVerificationModal .modal-input,
+#employmentVerificationModal .modal-file-upload .file-name {
+	flex-grow: 1;
+	/* 나머지 공간 차지 */
+	padding: 10px 12px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	font-size: 15px;
+	color: #555;
+	box-sizing: border-box;
+	min-height: 40px;
+	/* 입력 필드 최소 높이 설정 */
+	display: flex;
+	/* 텍스트가 세로 중앙에 오도록 */
+	align-items: center;
+}
+
+#employmentVerificationModal .modal-file-upload {
+	display: flex;
+	align-items: center;
+	flex-grow: 1;
+	gap: 10px;
+	/* 파일 선택 버튼과 파일명 사이 간격 */
+	flex-wrap: wrap;
+	/* 요소가 줄바꿈되도록 */
+}
+
+#employmentVerificationModal .btn-file-select {
+	/* .btn-file-select는 이미 일반 .btn-file-select에 정의되어 있을 수 있습니다.
+       만약 여기에서 재정의할 필요가 있다면 추가하세요. */
+	padding: 10px 15px;
+	font-size: 14px;
+	white-space: nowrap;
+}
+
+#modalCertDoc {
+	display: none;
+}
+
+/* 재직 인증 모달 내 "제출하기" 버튼 */
+#employmentVerificationModal #submitModalVerificationBtn {
+	margin-top: 20px;
+	/* 제출하기 버튼 상단 여백 */
+	width: 100%;
+	/* 너비를 100%로 늘려줄 수 있습니다. */
+	padding: 12px 0;
+	/* 세로 패딩 조절 */
+	font-size: 16px;
+	/* 기존 .btn-blue 스타일을 따르면서 여기에 추가적인 조정 */
+}
+ 
+
+
+.close-button {
+	color: #aaa;
+	position: absolute;
+	top: 1vw;
+	right: 1.5vw;
+	font-size: 2.0vw;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+	outline: none;
+	/* 포커스 시 기본 아웃라인 제거 */
+	border-color: #1a73e8;
+	/* 포커스 시 테두리 색상 변경 */
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 3px rgba(26, 115, 232, 0.2);
+	/* 포커스 시 외곽 그림자 */
+	cursor: pointer;
+}
+
+.btn-password {
+	text-align: center;
+}
+
+.btn-password:focus {
+	outline: none;
+	/* 포커스 시 기본 아웃라인 제거 */
+	border-color: #1a73e8;
+	/* 포커스 시 테두리 색상 변경 */
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 3px rgba(26, 115, 232, 0.2);
+	/* 포커스 시 외곽 그림자 */
+	text-decoration: none;
+	cursor: pointer;
+}
+
+/* General error message for modal */
+.error-message {
+	color: #e53935;
+	font-size: 1.2vw;
+	margin-top: 1vw;
+	display: none;
+}
+
+
+/* Welcome Message */
+.welcome-message {
+	background-color: #e0f0ff;
+	color: #1a73e8;
+	padding: 15px 20px;
+	border-radius: 8px;
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 30px;
+}
+
+/* Content Area - Flex container for sidebar and main-content */
+.content-area {
+	display: flex;
+	gap: 30px;
+	min-height: 700px;
+
+}
+
+.mypage-content-section {
+	display: none;
+	/* <-- 이것이 매우 중요합니다! */
+	visibility: hidden;
+	opacity: 0;
+	max-height: 0;
+	/* height: auto; 대신 max-height를 사용 (트랜지션에 더 적합) */
+	padding: 0px 20px;
+	/* 초기 패딩도 0으로 설정 */
+	overflow: hidden;
+
+	transition:
+		visibility 0.3s ease-in-out,
+		opacity 0.3s ease-in-out,
+		max-height 0.3s ease-in-out,
+		padding 0.3s ease-in-out;
+
+	/* 기존 스타일 유지 (이 부분은 숨김/보임에 영향 없음) */
+	background-color: #fff;
+	border-radius: 8px;
+	margin-left: 20px;
+	flex-grow: 1;
+}
+
+
+
+
+/* --- 사이드바 관련 CSS도 확인 --- */
+.sidebar {
+	width: 200px;
+	/* 사이드바 너비 */
+	flex-shrink: 0;
+	/* 내용이 많아져도 너비 유지 */
+	background-color: #f8f9fa;
+	border-radius: 8px;
+	padding: 20px 0;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	min-height: 850px;
+	height: fit-content;
+	/* 내용에 맞춰 높이 조절 */
+}
+
+.sidebar ul {
+	list-style: none;
+
+}
+
+.sidebar li {
+	margin-bottom: 5px;
+}
+
+.sidebar-link {
+	display: block;
+	padding: 10px 20px;
+	color: #333;
+	text-decoration: none;
+	font-weight: 500;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-link:hover {
+	background-color: #e9ecef;
+	color: #007bff;
+}
+
+/* 활성화된 사이드바 링크 스타일 */
+.sidebar-link.active {
+	background-color: #007bff;
+	/* 활성화된 링크 배경 */
+	color: #fff;
+	/* 활성화된 링크 텍스트 색상 */
+	border-radius: 0 50px 50px 0;
+	/* 오른쪽만 둥글게 */
+	position: relative;
+	z-index: 1;
+	/* 다른 요소 위에 오도록 */
+}
+
+.sidebar-link.active::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 5px;
+	/* 강조 선 */
+	height: 100%;
+	background-color: #0056b3;
+	/* 더 진한 색 */
+}
+
+
+/* Main Content */
+.main-content {
+	flex-grow: 1;
+	min-height: 800px;
+	/* 남은 공간을 모두 차지 */
+}
+
+.content-area {
+	display: flex;
+	/* 사이드바와 메인 컨텐츠를 옆으로 나열 */
+	gap: 20px;
+	/* 사이드바와 메인 컨텐츠 사이 간격 */
+	width: 100%;
+	/* 부모 컨테이너 너비 꽉 채우기 */
+}
+
+
+
+/* 내가 쓴 로그 목록 스타일 (mypage_mylogs_content) */
+.log-list {
+	margin-bottom: 30px;
+	min-height: 500px;
+	text-align: center;
+	align-items: center;
+}
+
+
+.log-metas {
+    flex: 0 0 200px;
+    display: flex;
+    gap: 3px;
+    font-size: 14px;
+    color: #777;
+}
+.log-date{
+	margin-right:25px;
+}
+.log-items {
+	padding: 15px;
+	/* 예시 */
+	margin : 0 auto;
+	text-align: center;
+	border: 1px solid #eee;
+	align-items: center;
+	cursor: pointer;
+	/* 클릭 가능하도록 커서 변경 */
+	transition: background-color 0.3s ease;
+	/* 부드러운 전환 효과 */
+	border-radius: 0.25rem;
+}
+.header-date{
+	margin-right: 55px;
+}
+.log-item .log-company{
+	flex: 2;
+}
+.log-item .log-titles{
+	flex: 4;
+}
+.log-item .log-metas{
+	flex: 2;
+}
+.log-item-link{
+	text-decoration: none;
+	    color: inherit;
+	    display: block; /* ⭐ 추가: 이 부분이 중요합니다. */
+	    margin-bottom: 8px; /* 각 로그 항목 사이의 간격 */
+	}
+
+.log-list-header {
+	display: flex;
+	align-items: center;
+	text-align: center;
+	padding-top:10px;
+	padding-bottom:10px;
+	background-color: #f1f3f5;
+	border-bottom: 1px solid #ddd;
+	font-weight: bold;
+	color: #555;
+	margin-bottom: 10px;
+	border-radius: 5px;
+}
+.log-list-header .header-company {
+    flex: 2; /* 예시: 회사명은 전체 너비의 2/8 (또는 비율에 따라) */
+    /* text-align: left; 기본적으로 flex 시작점에 정렬됨 */
+}
+
+.log-list-header .header-title {
+    flex: 4; /* 예시: 제목은 전체 너비의 4/8 */
+    /* text-align: left; */
+}
+
+.log-list-header .header-meta {
+    flex: 2; /* 예시: 메타 정보는 전체 너비의 2/8 */
+    display: flex;
+    min-width: 150px; /* 고정 너비가 필요하다면 지정 (flex와 같이 사용 시 주의) */
+}
+
+
+.log-item:hover {
+	background-color: #f0f0f0;
+	/* 마우스 오버 시 배경색 변경 */
+	/* color: #007bff; /* 글자색 변경도 가능 */
+}
+
+
+/* Pagination Wrapper for fixed position */
+.pagination-wrapper {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: #fff;
+	padding: 15px 0;
+	box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+	z-index: 999;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+
+#mypage_mylogs_content {
+	position: relative;
+	/* Important: Add padding to make space for the absolutely positioned pagination */
+	padding-bottom: 70px;
+	/* Adjust this value as needed, roughly the height of your pagination + some margin */
+	/* Other styles for #mypage_mylogs_content go here */
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+	list-style: none;
+	padding: 0;
+
+	position: relative;
+	bottom: 20px;
+	/* #mypage_mylogs_content 하단에서 20px 위 */
+	left: 0;
+	right: 0;
+	width: 100%;
+
+	background-color: white;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+	z-index: 10;
+}
+
+.pagination li {
+	margin: 0 5px;
+}
+
+.pagination li a {
+	display: block;
+	padding: 8px 12px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	text-decoration: none;
+	color: #333;
+	transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination li.active a {
+	background-color: #007bff;
+	color: white;
+	border-color: #007bff;
+}
+
+.pagination li a:hover {
+	background-color: #e9ecef;
+}
+
+/* Active state for numerical page links only */
+.pagination li:not(:first-child):not(:last-child).active a {
+	background-color: #007bff;
+	color: white;
+	border-color: #007bff;
+}
+
+/* Previous/Next button specific styles */
+.pagination li a[aria-label="Previous"],
+.pagination li a[aria-label="Next"] {
+	background-color: #0079FF;
+	/* Blue background for buttons */
+	color: white;
+	/* White text */
+	border-color: #0079FF;
+	/* Blue border */
+	font-weight: bold;
+	padding: 8px 18px;
+	/* Slightly more padding for button feel */
+	border-radius: 6px;
+	/* More rounded corners */
+}
+
+.pagination li a[aria-label="Previous"]:hover,
+.pagination li a[aria-label="Next"]:hover {
+	background-color: #0060d4;
+	/* Darker blue on hover */
+	border-color: #0060d4;
+}
+
+/* Ensure Previous/Next buttons do NOT change color when active/disabled, only hover */
+.pagination li.disabled a[aria-label="Previous"],
+.pagination li.disabled a[aria-label="Next"] {
+	background-color: #cccccc;
+	/* Lighter gray for disabled buttons */
+	border-color: #cccccc;
+	color: #888888;
+	cursor: default;
+	pointer-events: none;
+}
+
+/* Remove any active styling from Previous/Next buttons */
+.pagination li.active a[aria-label="Previous"],
+.pagination li.active a[aria-label="Next"] {
+	background-color: #0079FF;
+	/* Revert to default blue if active class is somehow applied */
+	color: white;
+	border-color: #0079FF;
+}
+
+.pagination .page-number {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 36px;
+	height: 36px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	color: #777;
+	font-weight: bold;
+	transition: all 0.3s ease;
+	margin: 0 3px;
+}
+
+.pagination .page-number:hover {
+	background-color: #f0f0f0;
+}
+
+.pagination .page-number.active {
+	background-color: #1a73e8;
+	color: #fff;
+	border-color: #1a73e8;
+}
+
+.pagination span {
+	display: flex;
+	align-items: center;
+	color: #fff;
+	font-weight: bold;
+}
+
+/* --- 회원정보 수정 페이지 (memberinfo.png 기반) --- */
+/* Form container itself - renamed to match the HTML structure's `info-form` */
+.info-form {
+	padding-top: 20px;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 5px;
+	/* Adjusting gap for a more compact look */
+	max-width: 900px;
+	/* Adjusted max-width */
+	margin-left: 90px;
+	/* Center the form within its parent */
+}
+
+.info-form .button-group {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	margin-top: 20px;
+	/* 버튼 그룹 상단 여백 추가 */
+}
+
+.form-row {
+	display: flex; /* Flex 컨테이너로 설정 */
+    flex-direction: column; /* 자식 요소들을 세로(column) 방향으로 정렬 */
+    align-items: flex-start; /* 자식 요소들을 컨테이너의 시작점(왼쪽)에 정렬 */
+    margin-bottom: 10px; /* 각 폼 행 사이에 간격 */
+    position: relative; /* 자식 요소의 absolute 포지셔닝 기준점이 됩니다 */
+    /* 유효성 메시지 공간 확보를 위해 padding-bottom은 메시지 위치를 고려하여 설정 */
+}
+
+.form-label {
+	display: block;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 5px;
+    padding-top: 0;
+}
+
+
+.form-input-wrapper {
+	flex-grow: 1;
+    width: 100%; /* 부모 .form-row의 너비를 꽉 채웁니다 */
+    display: flex;
+	gap:5px;
+    flex-direction: column; /* 입력 필드와 유효성 메시지를 세로로 정렬 */
+    position: relative;
+}
+
+
+.form-label-input {
+	/* max-width: 65%; 이전 설정 유지 */
+	flex: 1;
+	/* flex-grow를 1로 주어 가능한 공간을 채우도록 */
+}
+
+.form-label-input-nick {
+	/* max-width: 65%; 이전 설정 유지 */
+	flex: 1;
+	/* flex-grow를 1로 주어 가능한 공간을 채우도록 */
+}
+
+.form-passwd {
+	margin-top: 9px;
+}
+
+.form-input {
+	display: flex;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+	gap: 8px;
+}
+
+
+
+.form-label-input[readonly] {
+	background-color: #f0f0f0;
+	cursor: not-allowed;
+	color: #555;
+}
+
+.form-label-input-nick[readonly] {
+	background-color: #f0f0f0;
+	cursor: not-allowed;
+	color: #555;
+}
+
+.form-input input[type="text"],
+.form-input input[type="email"],
+.form-input input[type="password"] {
+	flex: 1;
+	padding: 10px 12px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	font-size: 0.9375rem;
+	/* 15px */
+	color: #333;
+	min-width: 150px;
+	max-width: 450px;
+	box-sizing: border-box;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+	transition: all 0.2s ease-in-out;
+}
+
+.form-input input[type="text"]:focus,
+.form-input input[type="email"]:focus,
+.form-input input[type="password"]:focus {
+	outline: none;
+	border-color: #1a73e8;
+	box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+}
+
+.form-input.input-with-button button,
+.form-input.input-with-file-button button {
+	/* 파일 버튼도 포함 */
+	padding: 10px 15px;
+	/* 이미지에 맞게 버튼 패딩 조정 */
+	font-size: 14px;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight: bold;
+	transition: background-color 0.2s, color 0.2s;
+	width: 80px;
+	/* 버튼 고정 너비 */
+	min-width: 80px;
+	/* 최소 너비 확보 */
+}
+
+.btn-file-select {
+	background-color: #f0f0f0;
+	/* 배경색 */
+	color: #333;
+	/* 글자색 */
+	border: 1px solid #ddd;
+	/* 테두리 */
+	padding: 10px 15px;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight: bold;
+	white-space: nowrap;
+	/* "파일 선택"이 줄바꿈되지 않도록 */
+}
+
+.btn-file-select:hover {
+	background-color: #e0e0e0;
+}
+
+.form-input.input-with-file-button .file-name {
+	flex-grow: 1;
+	overflow: auto;
+	/* 파일 경로 입력 필드가 가능한 공간을 채우도록 */
+	min-width: 150px;
+	/* 최소 너비 지정 */
+	
+}
+
+.form-input.input-with-button button {
+	padding: 10px 15px;
+	/* 이미지에 맞게 버튼 패딩 조정 */
+	font-size: 14px;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight: bold;
+	transition: background-color 0.2s, color 0.2s;
+	/* max-width: 10%; */
+	/* 비율 대신 고정 너비로 변경 고려 */
+	width: 80px;
+	/* 버튼 고정 너비 */
+}
+
+/* 닉네임과 이메일 버튼이 있는 input 그룹의 max-width 조정 */
+.form-input.input-with-button-nick,
+.form-input.input-with-button-email {
+	flex: 1;
+	/* 가능한 공간을 채우도록 */
+	width: 100%;
+	/* 부모(form-input-wrapper)의 100%를 차지 */
+	min-width: 300px;
+	/* 이 그룹 자체의 최소 너비 설정, 너무 작아지지 않도록 */
+}
+
+.form-input.input-with-button-nick input,
+.form-input.input-button-email input {
+	flex: 1;
+	/* 인풋이 가능한 공간을 채우도록 */
+}
+
+#verificationCodeSection {
+    display: none; /* 기본적으로 숨김 */
+	/* 라벨과 입력 필드가 상단에 정렬되도록 */
+}
+/* General Button Styles - Unified */
+.btn {
+	padding: 12px 15px;
+	border: none;
+	border-radius: 6px;
+	font-size: 0.875rem;
+	cursor: pointer;
+	font-weight: bold;
+	transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, border-color 0.2s;
+	white-space: nowrap;
+	/* 모든 버튼의 너비를 동일하게 설정 */
+	width: 120px;
+	/* 원하는 너비로 조절하세요. (예: 100px) */
+	/* 최소 너비를 설정하여 콘텐츠가 짧을 때도 너무 작아지지 않게 할 수 있습니다. */
+	/* min-width: 80px; */
+}
+
+.btn:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+}
+
+/* Specific Button Colors based on memberinfo.png */
+.btn-primary {
+	
+	background-color: #0079FF;
+	color: #fff;
+}
+
+.btn-primary:hover {
+	background-color: #0060d4;
+}
+
+.btn-secondary {
+	/* 재인증 버튼 (초록색) */
+	background-color: #61db75;
+	color: #fff;
+}
+
+.btn-secondary:hover {
+	background-color: #4CAF50;
+}
+
+.btn-gray {
+	/* 수정 버튼 (회색) */
+	background-color: #808080;
+	color: #fff;
+}
+
+.btn-gray:hover {
+	background-color: #6a6a6a;
+}
+
+.btn-blue {
+	/* 저장 버튼 (파란색) */
+	background-color: #0079FF;
+	color: #fff;
+}
+
+.btn-blue:hover {
+	background-color: #0060d4;
+	color: #fff;
+}
+.edit-btn {
+	margin-left:300px;
+	display: flex;	
+	gap: 15px;
+	margin-top:20px;
+}
+
+.validation-message {
+	font-size: 13px;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	white-space: nowrap;
+	flex-basis: 100%;
+}
+
+/* 오류 메시지 (빨간색) */
+.validation-message.error {
+	color: #e53e3e;
+	/* 기존에 사용하시던 에러 메시지 색상 */
+}
+
+/* 성공 메시지 (파란색) */
+.validation-message.success {
+	color: #0079FF;
+	/* 요청하신 파란색 */
+}
+
+
+.form-row #nicknameValidationMessage,
+#emailValidationMessage,
+#emailVerificationMessage {
+	/* 좀 더 구체적인 셀렉터 사용 */
+	/* .form-label의 width + margin-right에 맞춰 조정 */
+}
+
+
+.form-actions {
+	display: flex;
+	justify-content: center;
+	/* <<< MODIFIED: Centered buttons */
+	gap: 15px;
+	margin-top: 40px;
+	padding-top: 20px;
+	border-top: 1px solid #eee;
+}
+
+.form-actions .btn {
+	min-width: 120px;
+	padding: 12px 25px;
+	font-size: 1rem;
+	/* 16px */
+}
+
+/* password-change-form 및 modal 관련 스타일은 변경하지 않습니다. */
+.password-change-form .button-group .btn {
+	width: 200px;
+	padding: 15px 0;
+	font-size: 14px;
+	border-radius: 20px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modal-buttons {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	margin-top: 25px;
+}
+
+.modal-buttons button {
+	width: 100px;
+	padding: 12px 0;
+	font-size: 16px;
+	border-radius: 6px;
+	font-weight: bold;
+}
+
+.password-change-form {
+	padding-top: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5vw;
+	max-width: 400px;
+	margin: 0 auto;
+}
+
+.password-change-form .button-group {
+	margin-top: 10px;
+	border-top: none;
+	justify-content: center;
+}
+
+.password-change-form .button-group .btn-full-width {
+	width: 100%;
+	max-width: 400px;
+	padding: 10px 0;
+	font-size: 16px;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#open-secession-modal {
+	display: block;
+	margin: 40px auto 0;
+	width: 200px;
+	padding: 15px 0;
+	font-size: 1.25vw;
+	border-radius: 20px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* --- 회원 탈퇴 (mypage_secession_content) 스타일 --- */
+#mypage_secession_content {
+	text-align: center;
+	/* Center the content */
+	padding: 40px;
+	/* Add some padding around the content */
+}
+
+#mypage_secession_content h2 {
+	font-size: 28px;
+	/* Make the heading larger */
+	color: #dc3545;
+	/* Consider a warning color like red or a darker shade */
+	margin-bottom: 20px;
+}
+
+#mypage_secession_content p {
+	font-size: 16px;
+	color: #555;
+	margin-bottom: 30px;
+	padding: 0 50px;
+	/* Add horizontal padding for better readability on wider screens */
+	line-height: 1.6;
+	/* Improve line spacing */
+}
+
+#mypage_secession_content button {
+	font-size: 1rem;
+	border: 1px solid #dc3545;
+	/* Use a border that matches the potential warning color */
+	background-color: #dc3545;
+	/* A light background related to the warning color */
+	color: #fff;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight: bold;
+	width:150px;
+	transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+#mypage_secession_content button:hover {
+	background-color: rgb(165, 29, 43);
+	color: #fff;
+	border-color: rgb(165, 29, 43);
+}
+
+#secessionConfirmButton {
+	/* ... 기존 스타일 ... */
+	width: auto;
+	/* 또는 원하는 더 넓은 값 (예: 180px) */
+	min-width: 160px;
+	/* 최소 너비 설정 (auto와 함께 사용하면 유연하게 조절됨) */
+	padding: 12px 20px;
+	/* 좌우 padding을 약간 줄여 공간 확보 */
+}
+#companyName{
+	font-weight: bold;
+}
+
+#modalSelectedFileName{
+	 /* 또는 #modalSelectedFileName */
+	    display: inline-block; /* 또는 block, flex. span은 기본적으로 inline이라 너비를 가지지 못함 */
+	    max-width: 130px;     /* ⭐⭐ 이 부분 중요: span이 가질 수 있는 최대 너비를 지정 (예시) ⭐⭐ */
+	    white-space: nowrap;  /* 텍스트가 줄바꿈되지 않도록 설정 */
+	    overflow: hidden;     /* 지정된 영역을 벗어나는 텍스트를 숨김 */
+	    text-overflow: ellipsis; /* 숨겨진 텍스트를 "..."으로 표시 */
+}
+.input-with-file-button #modalSelectedFileName {
+    flex-grow: 1; /* 남은 공간을 최대한 차지 */
+    min-width: 0; /* flex 아이템에서 overflow: hidden과 함께 유용 */
+    /* max-width는 필요없을 수도 있습니다. flex-grow가 적절히 공간을 나눌 것이므로 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.input-with-file-button .btn {
+    flex-shrink: 0; /* 버튼은 줄어들지 않도록 */
+}

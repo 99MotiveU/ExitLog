@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>접근 권한 없음</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+            color: #333;
+        }
+        .container {
+            display: inline-block;
+            padding: 40px 60px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #e74c3c;
+        }
+        p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        a {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #2b73ec;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+        a:hover {
+            background-color: #1150bb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚫 접근이 거부되었습니다</h1>
+        <p>이 게시글에 접근할 수 있는 권한이 없습니다.</p>
+        <a href="/" th:href="@{/main}">홈으로 돌아가기</a>
+    </div>
+</body>
+</html>

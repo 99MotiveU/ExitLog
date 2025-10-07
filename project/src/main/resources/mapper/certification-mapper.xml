@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.exitlog.admin.mapper.CertificationMapper">
+
+    <resultMap id="certificationDtoResultMap" type="com.exitlog.admin.model.dto.CertificationDto">
+	    <id property="certificateNo" column="CERTIFICATE_NO"/>
+	    <result property="userNo" column="USER_NO"/>
+	    <result property="companyName" column="EC_COMPANY_NAME"/>
+	    <result property="certificateUploadDate" column="UPLOAD_DATE_FORMATTED"/>
+	    <result property="originalFilePath" column="FILE_PATH"/>
+	    <result property="status" column="STATUS"/>
+	    <result property="userId" column="USER_ID"/>
+	    <result property="userCreatedDate" column="USER_CREATED_DATE_FORMATTED"/>
+	</resultMap>
+	
+	<resultMap id="certificationProcessDetailDtoResultMap" type="com.exitlog.admin.model.dto.CertificationProcessDetailDto">
+        <result property="userNo" column="USER_NO"/>
+        <result property="companyName" column="COMPANY_NAME"/>
+        <result property="currentStatus" column="STATUS"/>
+    </resultMap>
+	
+    <sql id="selectCertificationsColumns">
+        ec.CERTIFICATE_NO,
+        ec.USER_NO,
+        ec.COMPANY_NAME AS EC_COMPANY_NAME,
+        DATE_FORMAT(ec.UPLOAD_DATE, '%Y-%m-%d') AS UPLOAD_DATE_FORMATTED,
+        ec.FILE_PATH,
+        ec.STATUS,
+        u.USER_ID,
+        DATE_FORMAT(u.CREATED_DATE, '%Y-%m-%d') AS USER_CREATED_DATE_FORMATTED
+    </sql>
+
+	<!-- 재직 인증 요청 조회 -->
+    <select id="findCertificationRequests" parameterType="map" resultMap="certificationDtoResultMap">
+        SELECT
+            <include refid="selectCertificationsColumns"/>
+        FROM
+            employment_certificate ec
+        JOIN
+            `user` u ON ec.USER_NO = u.USER_NO
+        <if test="sortColumn != null and sortDirection != null and sortColumn != '' and sortDirection != ''">
+            ORDER BY ${sortColumn} ${sortDirection}
+        </if>
+        <if test="limit != null and offset != null"> LIMIT #{limit} OFFSET #{offset}
+        </if>
+    </select>
+    
+    <!-- 재직 인증 요청 갯수 -->
+    <select id="countCertificationRequests" resultType="int">
+        SELECT
+            COUNT(ec.CERTIFICATE_NO)
+        FROM
+            employment_certificate ec
+        JOIN
+            `user` u ON ec.USER_NO = u.USER_NO
+    </select>
+    
+    <!-- 재직 인증 요청 승인/반려 처리 -->
+    <update id="updateCertificationStatus" parameterType="map">
+        UPDATE employment_certificate
+        SET
+            STATUS = #{newStatus},
+            UPDATE_DATE = #{updateDate}
+        WHERE
+        	CERTIFICATE_NO = #{certificateNo}
+    </update>
+    
+    <!-- 인증 처리 후 회원 테이블(User)의 '회사명' 컬럼에 반영 -->
+	<update id="updateUserCompanyName" parameterType="map">
+        UPDATE `user`
+        SET
+            COMPANY_NAME = #{companyName}
+        WHERE
+            USER_NO = #{userNo}
+    </update>
+    
+    <!-- 특정 인증 내역 조회 -->
+    <select id="findCertificationDetailById" parameterType="int" resultMap="certificationProcessDetailDtoResultMap">
+        SELECT
+            USER_NO,
+            COMPANY_NAME,
+            STATUS        
+        FROM
+            employment_certificate
+        WHERE
+            CERTIFICATE_NO = #{certificateNo}
+    </select>
+    
+    <!-- user 테이블의 현재 회사명을 가져오는 메소드 -->
+    <select id="findUserCurrentCompanyName" parameterType="int" resultType="string">
+        SELECT
+            COMPANY_NAME
+        FROM
+            `user`
+        WHERE
+            USER_NO = #{userNo}
+    </select>
+
+</mapper>

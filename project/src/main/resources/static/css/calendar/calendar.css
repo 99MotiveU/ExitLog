@@ -1,0 +1,609 @@
+/* 기본 폰트 및 공통 스타일 */
+body {
+	font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui,
+		'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+	font-size: 1rem;
+	/* 기본 폰트 크기 설정 (rem의 기준이 됨) */
+	color: #333;
+}
+
+h1 {
+	margin-bottom: 30px !important;
+	font-size: 2.2rem;
+	/* rem 단위 사용 */
+	font-weight: 700;
+	color: #333;
+}
+
+/* 알림창 스타일 */
+.alert {
+	font-size: 0.9rem;
+	line-height: 1.4;
+	color: #0c5460;
+	/* info alert 기본 색상 */
+	background-color: #d1ecf1;
+	border-color: #bee5eb;
+	padding: 10px 15px;
+	border-radius: 5px;
+}
+
+.alert .fas {
+	color: #0c5460;
+}
+
+/* 필터 섹션 스타일 */
+.filter-section {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 25px;
+}
+
+.filter-dropdown {
+	display: flex;
+	flex-direction: row;
+	flex-grow: 1;
+	/* 남은 공간 차지 */
+	gap: 8px;
+	/* 드롭다운 간 간격 */
+}
+
+.filter-dropdown .form-select {
+	border-radius: 5px;
+	font-size: 0.9rem;
+	padding: 0.4rem 1rem;
+	height: 38px;
+	/* 높이 통일 */
+}
+
+.button-area {
+	display: flex;
+	gap: 8px;
+	/* 버튼 간 간격 */
+	flex-shrink: 0;
+	/* 줄어들지 않음 */
+}
+
+.filter-button {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	min-width: 80px;
+	/* 버튼 최소 너비 */
+	font-size: 0.9rem;
+	padding: 0.4rem 0.8rem;
+	border-radius: 5px;
+	height: 38px;
+	/* 높이 통일 */
+}
+/* FullCalendar 버튼 활성화 스타일 */
+.fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active {
+    display: none;
+}
+.fc .fc-button-primary{
+    background-color: #2b73ec !important;
+    border:none;
+    border-radius: 8px !important;
+}
+.fc-direction-ltr .fc-button-group > .fc-button:not(:last-child){
+    background-color: #2b73ec !important;
+    border:none;
+    border-radius: 8px !important;
+}
+.fc-toolbar-title{
+    font-size: 1.5rem !important;
+}
+container a{
+    text-decoration: none !important;
+    color: #333 !important; 
+}
+.filter-dropdown{
+    display: flex;
+    flex-direction: row;
+    width:80%;
+    gap:10px;
+}
+
+.button-area{
+    display: flex;
+    gap: 0.5rem;
+}
+
+.fc .fc-button-primary {
+	background-color: #2b73ec !important;
+	/* 사람인 파란색 */
+	border: none;
+	border-radius: 8px !important;
+	font-size: 0.9rem;
+	padding: 0.4rem 0.8rem;
+}
+
+/* FullCalendar 다음/이전 달 버튼 그룹 */
+.fc-direction-ltr .fc-button-group>.fc-button {
+	background-color: #2b73ec !important;
+	/* 사람인 파란색 */
+	border: none;
+	border-radius: 8px !important;
+	margin: 0 !important;
+	/* 버튼 그룹 간격 제거 */
+}
+
+.fc-direction-ltr .fc-button-group>.fc-button:first-child {
+	border-top-left-radius: 8px !important;
+	border-bottom-left-radius: 8px !important;
+}
+
+.fc-direction-ltr .fc-button-group>.fc-button:last-child {
+	border-top-right-radius: 8px !important;
+	border-bottom-right-radius: 8px !important;
+}
+
+/* 버튼 사이 구분선 없애기 */
+.fc-direction-ltr .fc-button-group>.fc-button:not(:first-child) {
+	border-left: none !important;
+}
+
+
+.fc-toolbar-title {
+	font-size: 1.4rem !important;
+	/* 캘린더 타이틀 크기 */
+	font-weight: 700;
+	color: #333;
+}
+
+.container a {
+	text-decoration: none !important;
+	color: #333 !important;
+}
+
+/* 캘린더 그리드 및 날짜 스타일 */
+.fc-daygrid-day-frame {
+	/* 기존 100px에서 충분한 높이 확보 */
+	/* min-height: 120px; */
+	/* PC 버전에서 셀의 최소 높이를 충분히 확보하여 날짜와 이벤트가 겹치지 않도록 조정 */
+	padding: 2px;
+	/* 셀 내부 여백 조정 */
+	display: flex;
+	/* flexbox 사용 */
+	flex-direction: column;
+	/* 세로 방향으로 아이템 배치 */
+	box-sizing: border-box;
+	/* 패딩, 보더 포함하여 너비/높이 계산 */
+}
+
+/* 요일 헤더 (일, 월, 화...) 폰트 색상 */
+.fc-col-header-cell-cushion {
+	color: #666;
+	/* 요일 글자색 */
+	font-weight: bold;
+	padding: 8px 0;
+	/* 상하 패딩으로 높이 조정 */
+	font-size: 0.9rem;
+	/* rem 단위 사용 */
+}
+
+/* 각 날짜 셀의 날짜 숫자 스타일 */
+.fc-daygrid-day-top {
+	display: flex;
+	justify-content: flex-end;
+	/* 날짜 숫자를 오른쪽으로 정렬 */
+	padding-right: 5px;
+	/* 오른쪽 패딩 */
+	font-size: 0.9em;
+	/* em 단위 사용 (부모 폰트 크기에 상대적) */
+	color: #333;
+	font-weight: bold;
+	padding-top: 5px;
+	/* 상단 패딩 */
+	/* 날짜 아래와 이벤트/more 링크 사이의 간격 증가 */
+	margin-bottom: 10px;
+	/* 기존 3px에서 10px로 늘림. 날짜와 공고, more 링크 간의 충분한 여백 확보 */
+	flex-shrink: 0;
+	/* 날짜가 줄어들지 않도록 고정 */
+}
+
+/* 주말 날짜 숫자 색상 */
+.fc-day-sun .fc-daygrid-day-top {
+	color: #ff4d4f;
+	/* 일요일 빨간색 */
+}
+
+.fc-day-sat .fc-daygrid-day-top {
+	color: #1890ff;
+	/* 토요일 파란색 */
+}
+
+/* 캘린더 셀의 이벤트 컨테이너 */
+.fc-daygrid-event-harness {
+	margin-bottom: 0px;
+	/* 이벤트 라인 간 간격 최소화 */
+	position: relative;
+	z-index: 1;
+	flex-shrink: 0;
+	/* 공간이 부족해도 줄어들지 않음 */
+	padding-top: 1px;
+	/* 이벤트 상단 여백 */
+	padding-bottom: 1px;
+	/* 이벤트 하단 여백 */
+}
+.fc .fc-daygrid-body-balanced .fc-daygrid-day-events{
+	position: static !important;
+}
+/* 캘린더 셀의 이벤트 (클릭 가능한 영역) */
+.fc-daygrid-event {
+	background-color: transparent;
+	/* 배경색 제거 */
+	border: none;
+	/* 테두리 제거 */
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	/* 한 줄로 표시 */
+	font-size: 0.75em;
+	/* 이벤트 폰트 크기 */
+	color: #333;
+	min-height: 19px;
+	/* 이벤트 라인의 최소 높이 (아이콘+텍스트에 적합하도록) */
+	line-height: 19px;
+	/* 줄 간격도 동일하게 설정하여 높이를 고정 */
+	display: block;
+	/* 블록 요소로 만들어 너비 100% 사용 */
+	position: relative;
+	/* 아이콘과 텍스트 정렬을 위해 */
+}
+
+/* 마감된 공고 스타일 */
+.fc-event-expired .fc-event-custom-content {
+	color: #999;
+	/* 회색으로 변경 */
+	text-decoration: line-through;
+	/* 취소선 */
+	opacity: 0.8;
+}
+
+/* 커스텀 이벤트 콘텐츠 내부 스타일 */
+.fc-event-custom-content {
+	display: flex;
+	/* flexbox 사용 */
+	flex-direction: row;
+	/* 한 줄에 가로로 배치 */
+	align-items: center;
+	/* 세로 중앙 정렬 */
+	width: 100%;
+	padding: 0 2px;
+	/* 좌우 여백 */
+	min-height: 19px;
+	/* fc-daygrid-event와 동일하게 */
+	line-height: 19px;
+	/* fc-daygrid-event와 동일하게 */
+}
+
+.fc-event-header {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	margin-bottom: 0;
+	font-weight: 500;
+	flex-grow: 1;
+	/* 남은 공간을 차지 */
+	overflow: hidden;
+	/* 넘치는 내용 숨김 */
+	text-overflow: ellipsis;
+	/* ... 표시 */
+	white-space: nowrap;
+	/* 한 줄로 유지 */
+}
+
+.fc-event-company {
+	font-size: 0.8rem;
+	/* 회사명은 부모 폰트 크기(eventContent)에 상대적 */
+	color: #333;
+	/* 회사명 색상 (사람인과 유사하게) */
+	font-weight: 500;
+	flex-shrink: 1;
+	/* 필요한 경우 줄어들 수 있도록 */
+	min-width: 0;
+	/* flexbox에서 내용이 넘칠 때 줄어들도록 설정 */
+}
+
+/* '시' / '마' 아이콘 스타일 */
+.event-icon {
+	display: inline-flex;
+	/* flex 사용으로 내부 텍스트 정렬 */
+	justify-content: center;
+	/* 가로 중앙 정렬 */
+	align-items: center;
+	/* 세로 중앙 정렬 */
+	width: 17px;
+	/* 아이콘 크기 */
+	height: 17px;
+	font-size: 0.7em;
+	/* 아이콘 폰트 크기 */
+	font-weight: bold;
+	border-radius: 50%;
+	/* 원형 */
+	color: white;
+	margin-right: 4px;
+	/* 텍스트와의 간격 */
+	flex-shrink: 0;
+	/* 공간을 줄이지 않음 */
+	vertical-align: middle;
+}
+
+.start-icon {
+	background-color: #2b73ec;
+	/* 시작일 파란색 */
+}
+
+.end-icon {
+	background-color: #e65252;
+	/* 마감일 빨간색 */
+}
+
+/* "+N more" 링크 스타일 */
+.fc .fc-daygrid-more-link {
+    display: flex;
+    align-items: center;  /* 수직 가운데 정렬 */
+    height: 22px;
+    font-size: 0.8rem;
+    color: #2b73ec !important;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0 0;
+    margin-top: 0.5rem;
+    z-index: 2;
+}
+.fc .fc-more-popover .fc-popover-body{
+	max-height:500px;
+	overflow:auto;
+}
+.fc .fc-popover{
+	z-index:999 !important;
+}
+/* 모달 스타일 (부트스트랩 기본 활용) */
+.modal-dialog {
+	z-index:10000;
+	max-width: 600px;        /* 최대 너비 제한 */
+	width: 90%;              /* 화면 크기에 따라 유동적 */
+	margin: 1.75rem auto;    /* 위아래 여백 + 가로 중앙 정렬 */
+	transition: transform 0.3s ease-out;
+	transform-origin: center center;
+}
+.modal.show .modal-dialog{
+	position: relative;
+    top: 25%;
+}
+@media (max-width: 576px) {
+  .modal-dialog {
+    max-width: 95%;
+    margin: 0.5rem auto;
+  }
+}
+.modal-title {
+	font-weight: 700;
+	width: 400px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.modal-body p {
+	margin-bottom: 8px;
+}
+
+.modal-body strong {
+	color: #333;
+}
+
+/* 새로 추가할 직무 텍스트 제한 스타일 */
+.modal-body .job-description {
+	display: -webkit-box;
+	/* 웹킷 기반 브라우저 (크롬, 사파리 등) */
+	-webkit-line-clamp: 3;
+	/* 텍스트를 3줄로 제한 */
+	-webkit-box-orient: vertical;
+	/* 세로 방향으로 정렬 */
+	overflow: hidden;
+	/* 넘치는 내용 숨김 */
+	text-overflow: ellipsis;
+	/* 넘치는 내용에 말줄임표(...) 표시 */
+	white-space: normal;
+	/* 한 줄로 강제하는 것 방지 */
+}
+
+/* 캘린더 셀의 이벤트들을 담는 컨테이너 */
+.fc-daygrid-day-events {
+	flex-grow: 1;
+	/* 남은 공간을 차지하여 이벤트들이 들어갈 공간 확보 */
+	overflow: hidden;
+	/* 셀을 넘어가는 이벤트는 숨김 */
+	position: relative;
+	/* +N more 링크 위치 조정을 위해 */
+}
+.link-btn{
+	width:100%;
+}
+/* 반응형 start */
+/* 작은 화면 (예: 태블릿 가로, 모바일 세로) - max-width: 768px */
+@media (max-width: 768px) {
+	body {
+		font-size: 14px;
+		/* 기본 폰트 크기 줄임 */
+	}
+
+	h1 {
+		font-size: 2rem;
+		/* h1 크기 줄임 */
+		margin-bottom: 25px !important;
+	}
+
+	.container {
+		padding: 20px 15px;
+		/* 컨테이너 좌우 패딩 줄임 */
+	}
+
+	.alert {
+		font-size: 0.8rem !important;
+		/* 알림창 폰트 크기 줄임 */
+	}
+
+	.filter-section {
+		flex-direction: column;
+		/* 필터 섹션 세로 정렬 */
+		align-items: stretch !important;
+		/* 요소들 가로로 늘리기 */
+		gap: 12px;
+		/* 간격 늘리기 */
+	}
+
+	.filter-dropdown {
+		flex-direction: column;
+		/* 드롭다운 메뉴 세로 정렬 */
+		width: 100%;
+		/* 너비 100%로 */
+		gap: 8px;
+	}
+
+	.filter-dropdown select {
+		width: 100%;
+		/* 셀렉트 박스 너비 100% */
+	}
+
+	.button-area {
+		flex-direction: column;
+		/* 버튼 세로 정렬 */
+		width: 100%;
+		/* 너비 100% */
+		gap: 8px;
+	}
+
+	.filter-button {
+		width: 100%;
+		/* 버튼 너비 100% */
+		min-width: unset;
+		/* 최소 너비 제한 해제 */
+	}
+
+	/* FullCalendar UI 요소 크기 조정 */
+	.fc-toolbar-title {
+		font-size: 1.2rem !important;
+		/* 캘린더 타이틀 크기 줄임 */
+	}
+
+	.fc-daygrid-day-frame {
+		min-height: 100px;
+		/* 작은 화면에서 셀 최소 높이 조정 - PC 버전과 유사하게 충분히 확보 */
+	}
+
+	.fc-col-header-cell-cushion {
+		font-size: 0.8rem;
+		/* 요일 헤더 폰트 크기 줄임 */
+		padding: 6px 0;
+	}
+
+	.fc-daygrid-day-top {
+		font-size: 0.8em;
+		/* 날짜 숫자 폰트 크기 줄임 */
+		padding-right: 3px;
+		padding-top: 3px;
+		margin-bottom: 8px;
+		/* 작은 화면에서 날짜와 이벤트 사이 간격 조정 */
+	}
+
+	.fc-daygrid-event {
+		font-size: 0.7em;
+		/* 이벤트 폰트 크기 줄임 */
+		min-height: 18px;
+		line-height: 18px;
+	}
+
+	.fc-event-custom-content {
+		padding: 0 1px;
+		/* 좌우 여백 줄임 */
+		min-height: 18px;
+		line-height: 18px;
+	}
+
+	.event-icon {
+		width: 15px;
+		height: 15px;
+		font-size: 0.65em;
+		/* 아이콘 폰트 크기 줄임 */
+		margin-right: 3px;
+	}
+
+	.fc-daygrid-more-link {
+		font-size: 0.75rem;
+		/* "+N more" 링크 폰트 크기 줄임 */
+		padding-left: 3px;
+		height: 20px;
+	}
+}
+
+/* 매우 작은 화면 (예: 모바일 세로) - max-width: 480px */
+@media (max-width: 480px) {
+	body {
+		font-size: 13px;
+		/* 기본 폰트 크기 더 줄임 */
+	}
+
+	h1 {
+		font-size: 1.6rem;
+		/* h1 크기 더 줄임 */
+		margin-bottom: 15px !important;
+	}
+
+	.fc-toolbar-title {
+		font-size: 1rem !important;
+		/* 캘린더 타이틀 크기 더 줄임 */
+	}
+
+	.fc-daygrid-day-frame {
+		min-height: 90px;
+		/* 더 작은 화면에서 셀 최소 높이 조정 - 충분히 확보 */
+	}
+
+	.fc-col-header-cell-cushion {
+		font-size: 0.7rem;
+		/* 요일 헤더 폰트 크기 더 줄임 */
+		padding: 3px 0;
+	}
+
+	.fc-daygrid-day-top {
+		font-size: 0.7em;
+		/* 날짜 숫자 폰트 크기 더 줄임 */
+		padding-right: 3px;
+		padding-top: 3px;
+		margin-bottom: 6px;
+		/* 더 작은 화면에서 날짜와 이벤트 사이 간격 조정 */
+	}
+
+	.fc-daygrid-event {
+		font-size: 0.65em;
+		/* 이벤트 폰트 크기 더 줄임 */
+		min-height: 17px;
+		line-height: 17px;
+	}
+
+	.fc-event-custom-content {
+		min-height: 17px;
+		line-height: 17px;
+	}
+
+	.event-icon {
+		width: 14px;
+		height: 14px;
+		font-size: 0.6em;
+		/* 아이콘 폰트 크기 더 줄임 */
+		margin-right: 2px;
+	}
+
+	.fc-daygrid-more-link {
+		font-size: 0.7rem;
+		/* "+N more" 링크 폰트 크기 더 줄임 */
+		height: 18px;
+	}
+}

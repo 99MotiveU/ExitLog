@@ -1,0 +1,12 @@
+#project
+clean package
+az acr login --name exitlogweb
+docker build -t exitlogweb-emaedmgbgtffbqce.azurecr.io/my-springboot-app:v1 --build-arg JAR_FILE=target/ExitLog-0.1.jar .
+docker push exitlogweb-emaedmgbgtffbqce.azurecr.io/my-springboot-app:v1
+
+#redis (redis-docker if you need)
+docker build -t exitlogweb-emaedmgbgtffbqce.azurecr.io/redis:v1 .
+docker push exitlogweb-emaedmgbgtffbqce.azurecr.io/redis:v1
+
+#multi container run
+az container create --resource-group SecondProject --file aci-deployment.yaml

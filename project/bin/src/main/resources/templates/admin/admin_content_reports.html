@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ExitLog - 신고 관리</title>
+    <link rel="stylesheet" th:href="@{/css/layoutcss.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin/admin.css}" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <main>
+      <div class="admin-content-title">🚨 신고된 게시글 관리</div>
+      <div class="admin-list-container">
+        <div class="flex-table-header">
+          <div class="col-log-id">글 ID</div>
+          <div class="col-log-title">제목</div>
+          <div class="col-log-company">회사명</div>
+          <div class="col-log-author">작성자</div>
+          <div class="col-log-repo-count">신고수</div>
+          <div class="col-log-date">작성일</div>
+        </div>
+        <!-- 게시글 없음 -->
+        <th:block th:if="${reportedLogsList == null or #lists.isEmpty(reportedLogsList)}" >
+          <div class="flex-table-row">
+            <div
+              style="
+                text-align: center;
+                padding: 20px;
+                flex-grow: 1;
+                color: #6c757d;
+              "
+            >
+              신고된 게시글이 없습니다.
+            </div>
+          </div>
+        </th:block>
+
+        <th:block th:unless="${reportedLogsList == null or #lists.isEmpty(reportedLogsList)}">
+          <div class="flex-table-row" th:each="logEntry : ${reportedLogsList}">
+            <div class="col-log-id" th:text="${logEntry.logNo}">-</div>
+            <div class="col-log-title">
+              <span th:text="${logEntry.title}"
+                class="report-log-title-action"
+                data-toggle="modal" 
+                data-target="#reportProcessModal" th:attr="data-logno=${logEntry.logNo}, 
+                         data-logtitle=${logEntry.title}, 
+                         data-repocount=${logEntry.repoCount}">
+              </span>
+            </div>
+            <div class="col-log-company" th:text="${logEntry.companyName ?: '-'}">-</div>
+            <div class="col-log-author" th:text="${logEntry.nickname ?: logEntry.userNo}">-</div>
+            <div class="col-log-repo-count" th:text="${logEntry.repoCount}">0</div>
+            <div class="col-log-date" th:text="${logEntry.createdDate != null ? #dates.format(logEntry.createdDate, 'yyyy-MM-dd') : '-'}">-</div>
+            </div>
+        </th:block>
+      </div>
+
+      <!-- 페이지네이션 -->
+      <nav th:if="${pagination != null && pagination.maxPage > 0}" 
+           aria-label="Page navigation" 
+           class="d-flex justify-content-center mt-4 admin-pagination">
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${pagination.currentPage == 1} ? 'disabled' : ''"><a class="page-link" th:href="@{/admin/reports(page=1, limit=${pagination.limit}, pageSize=${pagination.pageSize})}"><i class="fa-solid fa-backward"></i><span class="sr-only">First</span></a></li>
+            <li class="page-item" th:classappend="${pagination.currentPage == 1} ? 'disabled' : ''"><a class="page-link" th:href="@{/admin/reports(page=${pagination.prevPage}, limit=${pagination.limit}, pageSize=${pagination.pageSize})}"><i class="fa-solid fa-caret-left"></i><span class="sr-only">Previous</span></a></li>
+            <li th:each="pageNum : ${#numbers.sequence(pagination.startPage, pagination.endPage)}" class="page-item" th:classappend="${pageNum == pagination.currentPage} ? 'active' : ''"><a class="page-link" th:href="@{/admin/reports(page=${pageNum}, limit=${pagination.limit}, pageSize=${pagination.pageSize})}" th:text="${pageNum}">1</a></li>
+            <li class="page-item" th:classappend="${pagination.currentPage == pagination.maxPage} ? 'disabled' : ''"><a class="page-link" th:href="@{/admin/reports(page=${pagination.nextPage}, limit=${pagination.limit}, pageSize=${pagination.pageSize})}"><i class="fa-solid fa-caret-right"></i><span class="sr-only">Next</span></a></li>
+            <li class="page-item" th:classappend="${pagination.currentPage == pagination.maxPage} ? 'disabled' : ''"><a class="page-link" th:href="@{/admin/reports(page=${pagination.maxPage}, limit=${pagination.limit}, pageSize=${pagination.pageSize})}"><i class="fa-solid fa-forward"></i><span class="sr-only">Last</span></a></li>
+        </ul>
+      </nav>
+
+      <!-- 모달 -->
+      <div class="modal fade" id="reportProcessModal" tabindex="-1" aria-labelledby="reportProcessModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"> <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="reportProcessModalLabel">신고 내역 및 처리 
+                <span class="modal-title-log-info">(글 ID: <span id="modalProcessLogId"></span>)</span>
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="currentProcessLogNo" value=""/>
+                <div class="d-flex justify-content-start">
+                  <div class="p-2 mr-2"><strong>게시글 제목</strong></div>
+                  <div class="p-2"><span id="modalProcessLogTitle"></span></div>
+                  <div class="p-2"><a href="#" id="modalViewPostLink" target="_blank" class="ml-2 badge badge-success">게시글 내용 보기</a></div>
+                </div>
+                <div class="d-flex justify-content-start">
+                  <div class="p-2 mr-2"><strong>총 신고 횟수</strong></div>
+                  <div class="p-2 "><strong id="modalProcessRepoCount" class="text-danger"></strong></div>
+                </div>
+              <hr>
+              <h6><strong>신고 사유 목록:</strong></h6>
+              <ul id="modalReportReasonList" class="report-reason-list">
+                <li class="text-muted">신고 내역을 불러오는 중...</li>
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+              <button type="button" class="btn btn-warning" id="processDismissButton">보류 (신고 수 리셋)</button>
+              <button type="button" class="btn btn-danger" id="processDeleteButton">게시글 삭제</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form
+        id="deleteLogPostForm"
+        method="POST"
+        style="display: none"
+        th:action="@{/}"
+      >
+        <input
+          type="hidden"
+          th:name="${_csrf?.parameterName}"
+          th:value="${_csrf?.token}"
+        />
+      </form>
+      <form
+        id="dismissReportsPostForm"
+        method="POST"
+        style="display: none"
+        th:action="@{/}"
+      >
+        <input
+          type="hidden"
+          th:name="${_csrf?.parameterName}"
+          th:value="${_csrf?.token}"
+        />
+      </form>
+
+      <script th:inline="javascript">
+        /*<![CDATA[*/
+        // CSRF 토큰 및 헤더명 전역 변수 (AJAX 요청 시 사용)
+        window.csrfToken = /*[[${_csrf?.token}]]*/ null;
+        window.csrfHeaderName = /*[[${_csrf?.headerName}]]*/ null;
+        $(document).ready(function () {
+          // ⭐ 신규: 제목(span) 클릭 시 신고 처리 모달 초기화 및 데이터 로드
+        $('.report-log-title-action').on('click', function() {
+            const logNo = $(this).data('logno'); // ⭐ data-logno에서 값을 가져옴
+            const logTitle = $(this).data('logtitle');
+            const repoCount = $(this).data('repocount');
+            //const logNo = $(this).data('log-id'); // data-log-id 사용 (이전 코드에서는 data-logno 였음, 일관성 있게 수정)
+            // const logTitle = $(this).data('log-title');
+            // const repoCount = $(this).data('log-repo-count');
+
+            console.log("모달 트리거: logNo=", logNo, "타입:", typeof logNo); // ⭐ logNo 값과 타입 확인
+
+            // logNo가 undefined 또는 null이 아닌지 확인
+            if (logNo === undefined || logNo === null || String(logNo).trim() === "") { // ⭐ 유효성 검사 강화
+                console.error('클릭된 항목에서 유효한 logNo를 가져올 수 없습니다. data-logno 속성 및 값을 확인하세요.');
+                alert('게시글 정보를 가져오는 데 실패했습니다 (logNo 누락). 다시 시도해주세요.');
+                // 모달이 이미 떴다면, 오류 메시지를 모달 내부에 표시하고 닫을 수도 있음
+                $('#modalReportReasonList').html('<li class="text-danger p-2">게시글 정보(ID)를 가져올 수 없습니다.</li>');
+                return; 
+            }
+
+            console.log("모달 트리거: logNo=", logNo, "logTitle=", logTitle, "repoCount=", repoCount); // ⭐ 디버깅 로그 추가
+
+            $('#currentProcessLogNo').val(logNo);
+            $('#modalProcessLogId').text(logNo);
+            $('#modalProcessLogTitle').text(logTitle);
+            $('#modalProcessRepoCount').text(repoCount);
+            
+            // ⭐ 모달 내 "게시글 내용 보기" 링크 URL 설정
+            $('#modalViewPostLink').attr('href', '/log/' + logNo);
+            
+            $('#modalReportReasonList').html('<li class="text-muted">신고 사유를 불러오는 중...</li>');
+            loadReportDetailsForModal(logNo);
+
+            // ⭐ loadReportDetailsForModal 함수에 유효한 logNo 전달 확인
+            loadReportDetailsForModal(logNo); 
+            
+            // data-toggle="modal" data-target="#reportProcessModal" 속성이 span에 있으므로 모달은 자동으로 뜸
+        });
+
+        // ⭐ 수정: 신고 사유 목록을 AJAX로 로드하는 함수
+      function loadReportDetailsForModal(logNo) {
+        // ⭐ logNo가 undefined로 들어오는지 여기서도 확인 가능
+          console.log(`loadReportDetailsForModal 호출됨. logNo: ${logNo}`); 
+          
+          if (typeof logNo === 'undefined' || logNo === null) {
+            console.error('loadReportDetailsForModal: 유효하지 않은 logNo 값으로 호출됨:', logNo);
+            $('#modalReportReasonList').html('<li class="text-danger p-2">잘못된 게시글 정보로 신고 내역을 불러올 수 없습니다.</li>');
+            return;
+          }
+
+          const $reportReasonList = $('#modalReportReasonList');
+          $reportReasonList.html('<li class="text-muted p-2">신고 사유를 불러오는 중...</li>'); 
+
+          console.log(`게시글 ID ${logNo}의 신고 상세 내역을 AJAX로 가져옵니다.`);
+
+          $.ajax({
+              url: `/api/reports/log/${logNo}/details`, // ⭐ 백엔드 API 경로와 일치해야 함
+              type: 'GET',
+              dataType: 'json', // 서버가 JSON을 반환할 것으로 기대
+              beforeSend: function(xhr) {
+                  // CSRF 토큰은 GET 요청에는 필수는 아니지만, 일관성을 위해 또는 POST 등 다른 요청에 필요할 수 있음
+                  if (window.csrfHeaderName && window.csrfToken) {
+                      // xhr.setRequestHeader(window.csrfHeaderName, window.csrfToken); // GET에는 보통 불필요
+                  }
+              },
+              success: function(reportItems) { // reportItems는 List<ReportItemDto> 형태의 JSON 배열
+                  $reportReasonList.empty(); // 기존 내용 비우기
+                  if (reportItems && reportItems.length > 0) {
+                      // 총 신고 횟수를 여기서 다시 정확하게 설정할 수도 있습니다.
+                      // $('#modalProcessRepoCount').text(reportItems.length); // 또는 서버에서 총 신고 횟수를 별도로 받아와도 됨
+
+                      reportItems.forEach(function(report) {
+                          const reportDate = report.repoDate ? new Date(report.repoDate).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) : '-';
+                          const listItem = `<li>
+                                              <span class="reason-text">${escapeHTML(report.repoReason)}</span>
+                                              <span class="reason-meta">
+                                                (신고자: ${escapeHTML(report.reporterNickname || '익명')}, 
+                                                 날짜: ${reportDate})
+                                              </span>
+                                            </li>`;
+                          $reportReasonList.append(listItem);
+                      });
+                  } else {
+                      $reportReasonList.append('<li class="text-muted p-2">이 게시글에 대한 신고 내역이 없습니다.</li>');
+                  }
+              },
+              error: function(xhr, status, error) {
+                  console.error("신고 상세 내역 로드 중 오류:", status, error, xhr.responseText);
+                  $reportReasonList.html('<li class="text-danger p-2">신고 사유를 불러오는데 실패했습니다. 다시 시도해주세요.</li>');
+              }
+          });
+      }
+        
+        // ⭐ 수정: 모달 내 "게시글 삭제" 버튼 클릭 이벤트
+      $('#processDeleteButton').on('click', function() {
+          const logNo = $('#currentProcessLogNo').val();
+          if (!logNo) { 
+              alert('처리할 게시글의 ID가 없습니다.'); 
+              return; 
+          }
+          
+          if (confirm(`정말 이 게시글(ID: ${logNo})을 삭제 처리하시겠습니까? 이 작업은 되돌릴 수 없습니다.`)) {
+              console.log(`게시글 ID ${logNo} 삭제 처리 AJAX 요청`);
+              
+              $.ajax({
+                  url: `/api/admin/reports/log/${logNo}/delete`, // ⭐ 백엔드 삭제 API 경로 확인!
+                  type: 'POST', // 또는 서버 API가 @DeleteMapping을 사용한다면 'DELETE'
+                  // dataType: 'json', // 서버가 JSON을 반환한다면 명시
+                  beforeSend: function(xhr) {
+                      // CSRF 토큰 헤더 추가
+                      if (window.csrfHeaderName && window.csrfToken) {
+                          xhr.setRequestHeader(window.csrfHeaderName, window.csrfToken);
+                      } else {
+                          console.warn('CSRF 토큰 또는 헤더 이름이 설정되지 않았습니다.');
+                      }
+                  },
+                  success: function(response) {
+                      // 서버 응답이 객체 형태이고 message 필드가 있다면 사용, 아니면 기본 메시지
+                      alert(response.message || '게시글이 성공적으로 삭제 처리되었습니다.');
+                      $('#reportProcessModal').modal('hide'); // 모달 닫기
+                      location.reload(); // ⭐ 페이지 새로고침하여 목록 업데이트
+                  },
+                  error: function(xhr, status, error) {
+                      console.error("게시글 삭제 처리 중 오류:", status, error, xhr.responseText);
+                      let errorMessage = "게시글 삭제 처리 중 오류가 발생했습니다.";
+                      if (xhr.responseJSON && xhr.responseJSON.message) {
+                          errorMessage += "\n" + xhr.responseJSON.message;
+                      } else if (xhr.responseText) {
+                          // 서버가 JSON이 아닌 일반 텍스트로 에러 메시지를 보낼 경우
+                          try {
+                              const errorResponse = JSON.parse(xhr.responseText);
+                              if (errorResponse.message) errorMessage += "\n" + errorResponse.message;
+                          } catch(e) {
+                              // JSON 파싱 실패 시, 응답 텍스트 일부를 보여줄 수 있음
+                              // errorMessage += "\n" + xhr.responseText.substring(0, 100); 
+                          }
+                      }
+                      alert(errorMessage);
+                  }
+              });
+          }
+      });
+
+        // ⭐ 수정: 모달 내 "보류 (신고 수 리셋)" 버튼 클릭 이벤트
+      $('#processDismissButton').on('click', function() {
+          const logNo = $('#currentProcessLogNo').val();
+          if (!logNo) { 
+              alert('처리할 게시글의 ID가 없습니다.'); 
+              return; 
+          }
+
+          if (confirm(`이 게시글(ID: ${logNo})의 신고 내역을 보류 처리하시겠습니까?`)) {
+              console.log(`게시글 ID ${logNo} 신고 보류(리셋) 처리 AJAX 요청`);
+              
+              $.ajax({
+                  url: `/api/admin/reports/log/${logNo}/dismiss`, // ⭐ 백엔드 보류 API 경로
+                  type: 'POST',
+                  beforeSend: function(xhr) {
+                      if (window.csrfHeaderName && window.csrfToken) {
+                          xhr.setRequestHeader(window.csrfHeaderName, window.csrfToken);
+                      }
+                  },
+                  success: function(response) {
+                      alert(response.message || '게시글 신고가 보류 처리되고 신고 수가 리셋되었습니다.');
+                      $('#reportProcessModal').modal('hide');
+                      location.reload(); // 페이지 새로고침하여 목록 업데이트
+                  },
+                  error: function(xhr, status, error) {
+                      console.error("신고 보류(리셋) 처리 중 오류:", status, error, xhr.responseText);
+                      let errorMessage = "신고 보류(리셋) 처리 중 오류가 발생했습니다.";
+                      if (xhr.responseJSON && xhr.responseJSON.message) {
+                          errorMessage += "\n" + xhr.responseJSON.message;
+                      }
+                      alert(errorMessage);
+                  }
+              });
+          }
+        });
+
+        // HTML 이스케이프 함수 (XSS 방지용)
+        function escapeHTML(str) {
+            if (str === null || typeof str === 'undefined') return '';
+            return String(str).replace(/[&<>"']/g, function (match) {
+                const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#x27;'};
+                return map[match];
+            });
+        }
+        });
+
+        /*]]>*/
+      </script>
+    </main>
+  </body>
+</html>

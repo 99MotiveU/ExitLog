@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.exitlog.calendar.mapper.JobPostMapper">
+	 <insert id="insertJobPost" parameterType="JobPostDto"> 
+	 	INSERT INTO JOBPOST ( id, active, url, company_name, title, opening_date, expiration_date, location, job_code, job_code_name, experience_level, experience_level_name ) 
+	 		VALUES(#{id},#{active},#{url},#{companyName},#{title},#{openingDate}, #{expirationDate},#{location},#{jobCode},#{jobCodeName}, #{experienceLevel},#{experienceLevelName}) 
+	 </insert>
+	 
+	<delete id="deleteAllJobPosts"> 
+		DELETE FROM JOBPOST 
+	</delete>
+	<select id="selectAll"> 
+		SELECT * FROM JOBPOST 
+	</select>
+    
+ 	
+ </mapper>

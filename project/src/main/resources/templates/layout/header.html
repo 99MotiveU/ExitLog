@@ -1,0 +1,24 @@
+<header class="header" th:fragment="header">
+    <div class="header-content">
+        <div class="header-left">
+            <span class="logo"><img src="/images/logo.png"style="width:120px;"></span>
+        </div>
+        <ul class="nav-links" id="header-menu">
+            <li><a href="/main">홈</a></li>
+            <li><a href="/log">로그</a></li>
+            <li><a href="/calendar">채용 캘린더</a></li>
+        </ul>
+        <div class="header-right">
+            <div class="user-actions">
+				<div th:if="${session.loginUser != null}">
+				    <a href="/logout" class="logout">로그아웃</a>
+				</div>
+				<div th:unless="${session.loginUser != null}">
+				    <a href="/login" class="login">로그인</a>
+				</div>
+                <a href="/mypage" class="mypage">마이페이지</a>
+				<a th:if="${session.loginUser!=null and session.loginUser.isAdmin==1}"href="/admin/reports" class="adminpage">관리자페이지</a>
+            </div>
+        </div>
+    </div>
+</header>

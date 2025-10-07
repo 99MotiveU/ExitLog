@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.exitlog.log.mapper.CommentMapper">
+ 
+  	<select id="getCommentList" parameterType="int" resultType="Comment">
+ 		SELECT C.COMMENT_NO, C.USER_NO, U.NICKNAME, C.CONTENT, C.IS_DEL, 
+ 			C.PARENT_COMMENT_NO, PU.NICKNAME AS PARENT_NICKNAME, C.CREATED_DATE
+ 		FROM COMMENT C
+ 		JOIN USER U ON U.USER_NO = C.USER_NO
+ 		LEFT JOIN COMMENT PC ON C.PARENT_COMMENT_NO = PC.COMMENT_NO
+ 		LEFT JOIN USER PU ON PC.USER_NO = PU.USER_NO
+ 		WHERE C.LOG_NO = #{logNo}
+ 		ORDER BY COALESCE(C.PARENT_COMMENT_NO, C.COMMENT_NO),
+ 		CASE WHEN C.PARENT_COMMENT_NO IS NULL THEN 0 ELSE 1 END,
+ 		C.CREATED_DATE 
+ 	</select>
+ 	
+ 	<insert id="insertComment" parameterType="Comment" useGeneratedKeys="true" keyProperty="commentNo">
+ 		INSERT INTO COMMENT(USER_NO, LOG_NO, CONTENT,CREATED_DATE) VALUES(#{userNo},#{logNo},#{content},NOW()) 
+ 	</insert>
+ 	
+ 	<update id="editComment" parameterType="Comment">
+ 		UPDATE COMMENT SET CONTENT = #{content} WHERE COMMENT_NO = #{commentNo}
+ 	</update>
+ 	
+ 	<update id="deleteComment" parameterType="int">
+		UPDATE COMMENT SET IS_DEL=1 WHERE COMMENT_NO=#{commentNo}
+	</update>
+		
+	<insert id="insertReply" parameterType="Comment" useGeneratedKeys="true" keyProperty="commentNo">
+		INSERT INTO COMMENT(USER_NO, LOG_NO, CONTENT, PARENT_COMMENT_NO,CREATED_DATE) VALUES(#{userNo}, #{logNo}, #{content}, #{parentCommentNo}, NOW())
+	</insert>
+	
+	<select id="getParentNicknameByParentCommentNo" parameterType="int">
+		SELECT NICKNAME FROM USER U JOIN COMMENT C ON U.USER_NO=C.USER_NO WHERE COMMENT_NO=#{parentCommentNo}
+	</select>
+ </mapper>

@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "saramin.api.key",
+  "type": "java.lang.String",
+  "description": "A description for 'saramin.api.key'"
+}]}

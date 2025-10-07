@@ -1,0 +1,504 @@
+/*
+  * admin.css
+  * 관리자 페이지 전용 스타일 시트
+  * Bootstrap 기본 클래스를 최대한 활용하고, 필요한 부분만 커스텀 오버라이드
+  */
+
+/* 기본 스타일 초기화 및 폰트 설정 */
+body {
+  font-family: 'Pretendard', Arial, Helvetica, sans-serif; /* Pretendard 폰트 우선 적용 */
+  margin: 0;
+  padding: 0;
+  display: flex; /* Flexbox를 사용하여 전체 레이아웃 (헤더, 메인, 푸터) 구성 */
+  min-height: 100vh; /* 뷰포트 높이 전체를 차지하도록 설정 */
+  flex-direction: column; /* 주축을 세로로 설정 (헤더, admin-wrapper, 푸터 순서) */
+}
+
+/* a 태그 기본 스타일 제거거 */
+a:hover {
+  text-decoration: none;
+}
+
+.container {
+  font-family: 'Pretendard-Regular';
+  min-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+#header-menu{
+    font-family: 'Pretendard-Regular';
+    margin: 0;    
+}
+#header-menu>li>a{
+    text-decoration: none;
+}
+#header-menu>li>a:hover{
+    text-decoration: none;
+}
+
+/* == 전체 컨테이너 (헤더 제외) - 사이드바와 메인 콘텐츠를 포함 == */
+.admin-wrapper {
+  display: flex;
+  flex: 1;
+  margin: 0 auto;
+  /* max-width: 1200px; */
+  /* padding: 1.7% 10%; */
+}
+
+/* == 사이드 네비게이션 스타일 == */
+.admin-sidebar {
+  background-color: #fff; /* 배경색 흰색 */
+  border: 1px solid #e0e0e0; /* Add border */
+  border-radius: 8px; /* Optional: add border-radius for aesthetics */
+  padding: 30px 10px; /* 상하 여백 */
+  display: flex;
+  flex-direction: column; /* 내부 요소 세로 정렬 */
+  margin-right: 15px; /* Add space to the right of the sidebar */
+  min-height: 700px;
+}
+
+.admin-sidebar-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #343a40;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-bottom: 1px solid #e9ecef; /* 제목 아래 구분선 */
+}
+
+/* 사이드바 링크 아이템 (Bootstrap list-group-item 클래스 활용) */
+.admin-sidebar .list-group-item {
+  border: none; /* Bootstrap 기본 테두리 제거 */
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease, color 0.2s ease; /* 부드러운 전환 효과 */
+  display: flex; /* 텍스트와 아이콘을 위한 flexbox 정렬 */
+  justify-content: space-between; /* 텍스트와 아이콘을 양 끝으로 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+}
+
+/* 사이드바 아이템 hover 및 active 시 스타일 */
+.admin-sidebar .list-group-item:hover,
+.admin-sidebar .list-group-item.active {
+  background-color: #d9eafc; /* hover 및 active 시 배경색 (Bootstrap primary보다 연한 색) */
+  color: #007bff; /* hover 및 active 시 글자색 (Bootstrap primary color) */
+}
+
+.admin-sidebar .list-group-item.active {
+  font-weight: bold; /* 활성화된 항목은 굵게 */
+}
+
+/* 사이드바 오른쪽 화살표 아이콘 스타일 */
+.admin-sidebar .list-group-item i.fas.fa-chevron-right {
+  font-size: 0.8rem;
+  color: #aaa; /* 기본 색상 */
+}
+
+/* == 메인 콘텐츠 영역 스타일 == */
+.admin-content {
+  flex: 1; /* admin-wrapper 내에서 남은 가로 공간을 모두 차지 */
+  padding: 30px;
+  background-color: #f8f9fa; /* 배경색 지정 (아주 연한 회색) */
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+/* 메인 콘텐츠 내 제목 스타일 */
+.admin-content-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #343a40;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e9ecef; /* 제목 아래 구분선 */
+}
+
+/* Flexbox 기반 리스트 컨테이너 (기존 테이블 역할을 대체) */
+.admin-list-container {
+  background-color: #fff;
+  border-radius: 8px; /* 모서리 둥글게 */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05); /* 컨테이너 그림자 */
+  overflow: hidden; /* 자식 요소가 모서리 둥글게 밖으로 나가지 않도록 처리 */
+  margin-bottom: 30px;
+}
+
+/* Flexbox 기반 리스트 헤더 스타일 */
+.flex-table-header {
+  display: flex; /* Flexbox를 사용하여 컬럼들을 가로로 정렬 */
+  background-color: #f1f3f5; /* 헤더 배경색 */
+  color: #495057; /* 글자색 */
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 12px 15px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom: 1px solid #dee2e6; /* 헤더 아래 구분선 */
+}
+
+/* Flexbox 헤더 내 각 컬럼 스타일 */
+.flex-table-header > div {
+  flex: 1; /* 기본적으로 모든 헤더 컬럼이 동일한 너비를 가짐 */
+  text-align: center; /* 기본 중앙 정렬 */
+  padding: 0 5px; /* 내부 여백 */
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  overflow: hidden; /* 넘치는 텍스트 숨김 */
+  text-overflow: ellipsis; /* 넘치는 텍스트에 ... 표시 */
+}
+
+/* Flexbox 헤더 및 행의 각 컬럼별 너비 조정 */
+/* 이미지의 컬럼 너비 비율에 맞춰 조정 */
+.flex-table-header .col-report-id,
+.flex-table-row .col-report-id {
+  flex: 0 0 80px;
+  text-align: center;
+} /* 신고번호 */
+.flex-table-header .col-company,
+.flex-table-row .col-company {
+  flex: 0 0 150px;
+  text-align: center;
+} /* 회사명 */
+.flex-table-header .col-content,
+.flex-table-row .col-content {
+  flex: 5;
+  text-align: center;
+} /* 제목 (가장 넓게) */
+.flex-table-header .col-author,
+.flex-table-row .col-author {
+  flex: 0 0 100px;
+  text-align: center;
+} /* 작성자 */
+.flex-table-header .col-report-reason,
+.flex-table-row .col-report-reason {
+  flex: 2; /* 다른 컬럼들과의 비율을 고려하여 조정 (예: 제목이 flex: 3) */
+  text-align: center; /* 내용은 좌측 정렬 */
+  padding-left: 10px; /* 좌측 정렬 시 여백 */
+} /* 신고 사유 컬럼 */
+.flex-table-header .col-count,
+.flex-table-row .col-count {
+  flex: 0 0 90px;
+  text-align: center;
+} /* 신고 횟수 */
+.flex-table-header .col-process,
+.flex-table-row .col-process {
+  flex: 0 0 100px;
+  text-align: center;
+} /* 처리 */
+.flex-table-header .col-remove,
+.flex-table-row .col-remove {
+  flex: 0 0 120px;
+  text-align: center;
+} /* 목록에서 제거 */
+
+/* Flexbox 기반 리스트 아이템 (각 행) 스타일 */
+.flex-table-row {
+  display: flex; /* Flexbox를 사용하여 각 행의 데이터를 가로로 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  padding: 10px 15px;
+  border-bottom: 1px solid #e9ecef; /* 각 행 아래 구분선 */
+  background-color: #fff;
+  transition: background-color 0.2s ease; /* hover 시 부드러운 전환 */
+}
+
+.flex-table-row:hover {
+  background-color: #f8f9fa; /* hover 시 배경색 변경 */
+}
+
+/* 마지막 행은 하단 경계선 제거 및 모서리 둥글게 처리 */
+.flex-table-row:last-child {
+  border-bottom: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* Flexbox 행 내 각 데이터 컬럼 스타일 */
+.flex-table-row > div {
+  flex: 1; /* 기본적으로 모든 컬럼이 동일한 너비를 가짐 (위의 .col-xxx 오버라이드) */
+  padding: 0 5px;
+  font-size: 0.9rem;
+  color: #343a40;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  overflow: hidden; /* 넘치는 텍스트 숨김 */
+  text-overflow: ellipsis; /* 넘치는 텍스트에 ... 표시 */
+}
+
+/* 페이징 스타일 (Bootstrap 기본 활용) */
+.admin-pagination .pagination .page-item .page-link {
+  border-radius: 5px; /* 페이지 링크 모서리 둥글게 */
+  margin: 0 3px; /* 페이지 링크 간 간격 */
+  /* Bootstrap 기본 색상 유지 */
+}
+
+/* Certification Table Columns */
+.flex-table-header .col-cert-member-no,
+.flex-table-row .col-cert-member-no {
+  flex: 0 0 80px; /* 회원번호 */
+  text-align: center;
+}
+.flex-table-header .col-cert-userid,
+.flex-table-row .col-cert-userid {
+  flex: 0 0 120px; /* 아이디 */
+  text-align: center;
+}
+.flex-table-header .col-join-date,
+.flex-table-row .col-join-date {
+  flex: 0 0 120px; /* 가입일 */
+  text-align: center;
+}
+.flex-table-header .col-cert-company-name,
+.flex-table-row .col-cert-company-name {
+  flex: 1; /* 회사명 (남은 공간 차지) */
+  text-align: center; 
+  padding-left: 10px; 
+}
+.flex-table-header .col-cert-document,
+.flex-table-row .col-cert-document {
+  flex: 0 0 100px; /* 서류 확인 */
+  text-align: center;
+}
+.flex-table-header .col-cert-status,
+.flex-table-row .col-cert-status {
+  flex: 0 0 120px; /* 재직 인증 여부 */
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------- */
+/* 신고페이지 모달 */
+/* admin_content_reports.html fragment 전용 스타일 */
+.report-log-title-link {
+  /* 게시글 제목 클릭 스타일 */
+  cursor: pointer;
+  color: #343a40;
+  text-decoration: none;
+}
+.report-log-title-link:hover {
+  text-decoration: none;
+  color: #0079ff;
+}
+
+/* Flex Table 컬럼 너비 (신고 관리 목록용) */
+.flex-table-header .col-log-id,
+.flex-table-row .col-log-id {
+  flex: 0 0 70px;
+  text-align: center;
+}
+.flex-table-header .col-log-title,
+.flex-table-row .col-log-title {
+  flex: 3;
+  text-align: center;
+  padding-left: 10px;
+  min-width: 150px; /* 제목이 너무 짧게 잘리는 것 방지 */
+}
+.flex-table-header .col-log-company,
+.flex-table-row .col-log-company {
+  flex: 1 1 100px;
+  text-align: center;
+}
+.flex-table-header .col-log-author,
+.flex-table-row .col-log-author {
+  flex: 1 1 90px;
+  text-align: center;
+}
+.flex-table-header .col-log-repo-count,
+.flex-table-row .col-log-repo-count {
+  flex: 0 0 80px;
+  text-align: center;
+}
+.flex-table-header .col-log-date,
+.flex-table-row .col-log-date {
+  flex: 1 1 130px;
+  text-align: center;
+}
+.flex-table-header .col-actions,
+.flex-table-row .col-actions {
+  flex: 0 0 160px;
+  text-align: center;
+}
+.flex-table-row .col-actions .btn {
+  margin: 0 3px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+/* 모달 내 신고 내역 스타일 */
+.report-details-list {
+  list-style-type: none;
+  padding-left: 0;
+  max-height: 180px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  background-color: #f9f9f9;
+}
+.report-details-list li {
+  padding: 4px 0;
+  border-bottom: 1px dashed #e0e0e0;
+}
+.report-details-list li:last-child {
+  border-bottom: none;
+}
+#logDetailModal .modal-body img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+/* 모달 내 신고 사유 목록 스타일 */
+.report-reason-list {
+    list-style-type: none;
+    padding-left: 0;
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+.report-reason-list li {
+    padding: 8px 5px;
+    border-bottom: 1px dashed #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.report-reason-list li:last-child {
+    border-bottom: none;
+}
+.report-reason-list .reason-text {
+    flex-grow: 1;
+}
+.report-reason-list .reason-meta {
+    font-size: 0.8em;
+    color: #777;
+    margin-left: 15px;
+    white-space: nowrap;
+}
+#reportProcessModal .modal-title-log-info { /* 모달 제목 옆 게시글 정보 스타일 */
+    font-size: 0.9rem;
+    font-weight: normal;
+    color: #555;
+    margin-left: 10px;
+}
+.report-log-title-action { /* 제목에 적용할 스타일 (클릭 가능함을 나타냄) */
+    cursor: pointer;
+}
+.report-log-title-action:hover {
+    color: #007bff;
+}
+
+/* ---------------------------------------------------------------- */
+/* admin_content_certifications.html fragment 전용 스타일 */
+/* === 회원 재직 인증 목록 컬럼 스타일 === */
+.flex-table-header .col-member-no,
+.flex-table-row .col-member-no {
+  flex: 0 0 100px; /* '회원번호' 컬럼 */
+  text-align: center;
+}
+.flex-table-header .col-cert-userid,
+.flex-table-row .col-cert-userid {
+  flex: 1 1 120px; /* 회원아이디 */
+  text-align: center;
+  min-width: 100px;
+}
+.flex-table-header .col-cert-company,
+.flex-table-row .col-cert-company {
+  flex: 1 1 150px; /* 회사명 */
+  text-align: center;
+  min-width: 120px;
+}
+.flex-table-header .col-cert-date,
+.flex-table-row .col-cert-date {
+  flex: 0 0 120px; /* 요청일 */
+  text-align: center;
+}
+.flex-table-header .col-cert-status,
+.flex-table-row .col-cert-status {
+  flex: 0 0 100px; /* 상태 */
+  text-align: center;
+}
+.flex-table-header .col-cert-action,
+.flex-table-row .col-cert-action {
+  flex: 0 0 100px; /* 서류확인 버튼 */
+  text-align: center;
+}
+.flex-table-row .col-cert-action .btn {
+  /* 버튼 크기 및 여백 조정 */
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+/* === 재직 인증 처리 모달 스타일 === */
+#certificationProcessModal .modal-body {
+  font-size: 0.9rem;
+}
+#certificationProcessModal .info-label {
+  font-weight: 600;
+  width: 100px; /* 레이블 너비 고정 */
+  display: inline-block;
+  color: #495057;
+}
+#certificationProcessModal .info-value {
+  color: #212529;
+}
+#certificationProcessModal .info-group {
+  padding: 8px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+#certificationProcessModal .info-group:last-child {
+  border-bottom: none;
+}
+#certificationProcessModal .certification-documents {
+  /* margin-top: 15px; */
+  padding-top: 15px;
+  /* border-top: 1px solid #e9ecef; */
+}
+#certificationProcessModal .document-item {
+  margin-bottom: 15px;
+  text-align: center; /* 이미지 가운데 정렬 */
+}
+#certificationProcessModal .document-item img {
+  max-width: 100%;
+  max-height: 300px; /* 이미지 미리보기 최대 높이 제한 */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  background-color: #fff;
+  cursor: pointer; /* 클릭 시 확대 가능하도록 암시 */
+  object-fit: contain; /* 이미지가 잘리지 않고 비율 유지하며 컨테이너 안에 맞춤 */
+}
+#certificationProcessModal .document-item p {
+  font-size: 0.8rem;
+  color: #6c757d;
+  margin-top: 5px;
+}
+#certificationProcessModal .document-list {
+  /* 여러 문서 가로 배치 */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+#certificationProcessModal .document-list .document-item {
+  flex: 1 1 250px; /* 기본 너비, 공간 있으면 늘어남 */
+  max-width: calc(50% - 10px); /* 한 줄에 최대 2개 (gap 고려) */
+}
+
+/* 이미지 클릭 시 확대 모달 스타일 */
+.image-zoom-modal .modal-lg {
+  max-width: 85%;
+}
+.image-zoom-modal .modal-body {
+  padding: 5px;
+  text-align: center;
+}
+.image-zoom-modal img {
+  max-width: 100%;
+  max-height: calc(100vh - 150px); /* 화면 높이에 맞춰 조정 (헤더/푸터 고려) */
+  object-fit: contain;
+}

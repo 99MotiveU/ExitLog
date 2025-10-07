@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ExitLog</title>
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Pretendard Font -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" th:href="@{/css/layoutcss.css}" />
+    <link rel="stylesheet" th:href="@{/css/log/log_detail.css}" />
+  </head>
+  <body>
+    <div th:replace="~{layout/header :: header}"></div>
+    <div class="container">
+      <a role="button" href="/log">목록으로</a>
+      <!-- 본문 영역 -->
+      <div class="post-header" th:object="${bean}">
+        <h1 th:text="*{title}">제목 글</h1>
+        <div class="post-meta">
+          <div>
+			<th:block th:if="*{companyName != null and companyName != ''}">				
+              <span id="company-span"  th:text="*{companyName}">회사명</span>
+			</th:block>
+            <th:block th:if="*{currentlyEmployed and userCompanyName!=null and userCompanyName != ''}">
+               	<span class="val-label"><i class="fa-regular fa-circle-check"></i>근무 이력이 확인된 회원의 게시글입니다</span>
+            </th:block>
+          </div>
+          <div>
+            <span>
+              <span th:text="*{nickname}"></span>
+              <span  th:if="*{currentlyEmployed and userCompanyName != null and userCompanyName != ''}" th:text="|*{userCompanyName}|" id="user-company-span"></span>
+            </span>
+            <span class="log-info">
+              <span th:if="*{editedDate==null}" th:text="*{#dates.format(createdDate, 'yyyy-MM-dd')}">날짜</span>
+              <span th:if="*{editedDate!=null}" th:text="*{#dates.format(editedDate, 'yyyy-MM-dd')}">날짜</span>
+              <span><i class="fa-regular fa-eye"></i><span th:text="*{viewCount}">조회수 값</span></span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-body" th:object="${bean}">
+        <div class="tag-area">
+          <div
+            class="tag-component"
+            th:each=" tag:${bean.tags}"
+            th:text="${tag.tagContent}"
+            disabled
+          >
+            인지도 하면 여기
+          </div>
+        </div>
+        <div th:utext="${bean.content}"></div>
+
+        <div class="post-val">
+          <span>나만이 알 수 있는 회사 tmi</span>
+          <div th:text="*{valText}"></div>
+        </div>
+
+        <button
+          class="report btn btn-outline-danger btn-sm"
+          data-toggle="modal"
+          data-target="#reportPostModal"
+          th:attr="data-logno=${bean.logNo}"
+          th:if="${session.loginUser != null}"
+        >
+          <i class="fa-solid fa-flag-checkered"></i> 신고하기
+        </button>
+
+        <th:block
+          th:if="${session.loginUser!=null&& session.loginUser.userNo==bean.userNo}"
+        >
+          <button class="edit-btn" id="log-edit-btn-area">수정</button>
+          <button class="del-btn" onclick="deleteLog()">삭제</button>
+        </th:block>
+      </div>
+
+      <!-- 댓글 영역 -->
+      <div class="comments-title">댓글 <span id="comment-count">0</span>개</div>
+
+      <!-- 댓글 입력창 -->
+      <th:block th:if="${session.loginUser!=null}">
+        <form class="comment-form">
+          <textarea
+            class="form-control"
+            id="text"
+            placeholder="댓글을 입력하세요..."
+            required
+          ></textarea>
+          <button type="button" onclick="addComment(event)">등록</button>
+        </form>
+      </th:block>
+
+      <div id="comment-list"></div>
+
+      <!-- 신고하기 모달 -->
+      <div
+        class="modal fade"
+        id="reportPostModal"
+        tabindex="-1"
+        aria-labelledby="reportPostModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div
+              class="modal-header"
+              style="background-color: #0079ff; color: white"
+            >
+              <h5 class="modal-title" id="reportPostModalLabel">게시글 신고</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                style="color: white"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p style="font-weight: bold; margin-bottom: 1rem">
+                신고하려는 이유를 선택해주세요
+              </p>
+              <form id="reportPostForm">
+                <input
+                  type="hidden"
+                  id="modalReportLogNo"
+                  name="logNo"
+                  value=""
+                />
+                <input
+                  type="hidden"
+                  id="modalReporterUserNo"
+                  name="reporterUserNo"
+                  value=""
+                />
+                <div class="form-group">
+                  <div class="report-reason-item">
+                    <input
+                      type="radio"
+                      id="reason1"
+                      name="reportReason"
+                      value="혐오 표현이나 비속어 사용"
+                      required/>
+                      <label for="reason1">혐오 표현이나 비속어 사용</label>
+                  </div>
+                  <div class="report-reason-item">
+                    <input
+                      type="radio"
+                      id="reason2"
+                      name="reportReason"
+                      value="오타, 내용 반복, 무의미한 단어 나열"
+                    />
+                    <label for="reason2">오타, 내용 반복, 무의미한 단어 나열</label>
+                  </div>
+                  <div class="report-reason-item">
+                    <input
+                      type="radio"
+                      id="reason3"
+                      name="reportReason"
+                      value="다른 게시물을 도용"
+                      />
+                      <label for="reason3">다른 게시물을 도용</label>
+                  </div>
+                  <div class="report-reason-item">
+                    <input
+                      type="radio"
+                      id="reason4"
+                      name="reportReason"
+                      value="기업명, 산업군, 직무가 잘못 기재"
+                    />
+                    <label for="reason4">기업명, 산업군, 직무가 잘못 기재</label>
+                  </div>
+                  <div class="report-reason-item">
+                    <input
+                      type="radio"
+                      id="reason5"
+                      name="reportReason"
+                      value="타 기업이나 자사 제품 등에 대한 광고/홍보"
+                    />
+                    <label for="reason5">타 기업이나 자사 제품 등에 대한 광고/홍보</label>
+                  </div>
+                  <div class="report-reason-item">
+                    <input
+                      type="radio"
+                      id="reason6"
+                      name="reportReason"
+                      value="명예훼손, 사생활 침해, 개인정보 노출"
+                    />
+                    <label for="reason6">명예훼손, 사생활 침해, 개인정보 노출</label>
+                  </div>
+                  <div class="report-reason-item">
+                    <input
+                      type="radio"
+                      id="reason7"
+                      name="reportReason"
+                      value="기타 권리침해 또는 기업기밀 누설"
+                    /><label for="reason7">기타 권리침해 또는 기업기밀 누설</label>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                취소
+              </button>
+              <button
+                type="button"
+                class="btn btn-success"
+                id="submitReportPostButton"
+                style="background-color: #0079ff; border-color: #0079ff"
+              >
+                신고
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:replace="~{layout/footer :: footer}"></div>
+    <script src="/js/log/log_detail.js"></script>
+    <script th:inline="javascript">
+      document.addEventListener('DOMContentLoaded', () => {
+        window.loginUserNo = /*[[${session.loginUser?.userNo}]]*/ 'loginUserNo';
+        window.logNo = /*[[${bean.logNo}]]*/ 'logNo';
+        selectCommentlist(logNo, loginUserNo);
+      });
+    </script>
+  </body>
+</html>

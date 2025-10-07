@@ -1,0 +1,285 @@
+/* Basic Reset & Font */
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+* {
+    font-family: 'Pretendard-Regular';
+}
+
+body {
+    font-family: 'Pretendard-Regular';
+    margin: 0;
+    padding: 0;
+    /* background-color: #f5f7fa; */
+    color: #343a40;
+}
+
+header a {
+    text-decoration: none;
+    color: #343a40 !important;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Header */
+.header {
+    margin-bottom: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1000; 
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    padding-top: 20px; /* 상하 패딩은 header에 적용 */
+    padding-bottom: 20px;
+    
+    /* header 자체는 좌우 패딩 없이 화면 너비를 꽉 채웁니다 */
+    /* display, align-items, gap 등은 이제 .header-content로 이동합니다 */
+}
+
+.header-content { /* 새로 추가된 컨테이너 */
+    display: flex;
+    align-items: center;
+    max-width: 1200px; /* 내부 콘텐츠의 최대 너비 */
+    margin: 0 auto; /* 내부 콘텐츠를 중앙 정렬 */
+    padding: 0 20px; /* 내부 콘텐츠의 좌우 여백 (양쪽 20px) */
+    width: 80%;
+}
+
+.header-left .logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1a73e8; /* ExitLog blue */
+    
+}
+
+.logo{
+    margin-right: 80px;
+}
+#header-menu{
+    font-family: 'Pretendard-Regular';
+    margin: 0;    
+}
+#header-menu>li>a{
+    text-decoration: none;
+}
+.nav-links {
+    display: flex;
+    gap: 50px;
+    font-size: 18px;
+    font-weight: 500;
+    margin-left: 60px; 
+}
+
+.nav-links a:hover {
+    color: #1a73e8;
+}
+
+/* .header-right 중복 정의 제거 */
+.header-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* user-actions를 오른쪽 끝으로 밀어냅니다 */
+}
+
+.user-actions {
+    display: flex;
+    gap: 15px;
+    font-size: 13px;
+}
+
+.user-actions a {
+    color: #888;
+    text-decoration-line: none;
+}
+
+.user-actions a:hover {
+    color: #1a73e8;
+    text-decoration-line: none;
+}
+
+/* Container (메인 컨텐츠는 기존처럼 중앙 정렬 유지) */
+.container {
+    max-width: 1200px;
+    width:80%;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+
+/* Welcome Message */
+.welcome-message {
+    background-color: #e0f0ff;
+    color: #1a73e8;
+    padding: 15px 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* Content Area */
+.content-area {
+    display: flex;
+    gap: 30px;
+}
+
+/* Sidebar */
+.sidebar {
+    flex: 0 0 200px; /* Fixed width for sidebar */
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 12px 20px;
+    color: #555;
+    font-size: 16px;
+    border-bottom: 1px solid #f0f0f0;
+    position: relative; /* For the arrow icon */
+}
+
+.sidebar ul li:last-child a {
+    border-bottom: none;
+}
+
+.sidebar ul li a.active {
+    background-color: #e0f0ff;
+    color: #1a73e8;
+    font-weight: bold;
+}
+
+.sidebar ul li a:hover:not(.active) {
+    background-color: #f9f9f9;
+}
+
+.sidebar ul li a::after {
+    content: '›'; /* Unicode for right-pointing angle bracket */
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #bbb;
+    font-weight: bold;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.main-content h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.log-list {
+    margin-bottom: 30px;
+}
+
+.log-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.log-item:last-child {
+    border-bottom: none;
+}
+
+.log-company {
+    flex: 0 0 150px;
+    font-weight: bold;
+    color: #444;
+}
+
+.log-title {
+    flex: 1;
+    font-size: 16px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 20px;
+}
+
+.log-meta {
+    flex: 0 0 200px; /* Adjust as needed */
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    font-size: 14px;
+    color: #777;
+}
+
+
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.pagination .page-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    color: #777;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.pagination .page-number:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination .page-number.active {
+    background-color: #1a73e8;
+    color: #fff;
+    border-color: #1a73e8;
+}
+
+.pagination span {
+    display: flex;
+    align-items: center;
+    color: #777;
+    font-weight: bold;
+}
+
+
+.footer{
+    position: relative;
+    margin: 0 auto;
+	margin-top: 25px;
+    max-width: 1200px;
+    width:70%;
+    padding: 0.1% 6%;
+    display: flex;
+    justify-content: space-evenly;
+    color: gray;
+    font-size: 0.8rem;
+}

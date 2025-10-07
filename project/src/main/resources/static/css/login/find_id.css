@@ -1,0 +1,219 @@
+body {
+    font-family: Pretendard, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Header Styling */
+header {
+    width: 100%;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 15px 0;
+}
+
+.header-content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+}
+
+nav ul {
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 30px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 5px;
+    margin-left: 150px;
+    position: relative;
+}
+
+nav ul li a.active {
+    color: #007bff;
+}
+
+nav ul li a.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #007bff;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center;     /* 수직 중앙 정렬 */
+    padding-top: 30px;       /* 헤더 아래 여백 */
+    width: 100%;
+}
+
+.findid-container {
+    padding: 0;
+    width: 100%;
+	max-height: 600px;
+    max-width: 850px;
+    margin-top: 0;
+    margin-bottom: 0;
+
+}
+
+.findid-box {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 0 1px #ddd;
+    text-align: center;
+}
+
+
+
+.findid-title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+	flex-grow: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: 30px;
+	width: 100%;
+}
+
+h2 {
+	text-align: left;
+	margin-bottom: 30px;
+}
+
+.form-group {
+	margin-bottom: 25px;
+	display: block;
+}
+
+.form-group label {
+	width: auto;
+	font-weight: 600;
+	font-size: 15px;
+	color: #555;
+	margin-bottom: 8px;
+	display: block;
+	text-align: left;
+}
+
+.input-with-button {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.form-group input {
+	flex: 1;
+	padding: 12px 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	font-size: 16px;
+	box-sizing: border-box;
+}
+
+.form-group button {
+	padding: 10px 15px;
+	font-size: 14px;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s	 ease;
+	white-space: nowrap;
+	width: auto;
+}
+
+.form-group button:hover {
+	background-color: #0056b3;
+}
+
+.error {
+	color: red;
+	font-size: 12px;
+	margin-left: 10px;
+}
+
+.error-message {
+	font-size: 13px;
+	margin-top: 5px;
+	display: block;
+	height: 18px;
+	line-height: 1.2;
+	padding-left: 2px;
+	text-align: left;
+	
+}.findid-button {
+	width: 100%;
+	/* Probably full width */
+	padding: 10px;
+	/* Might be different padding */
+	background-color: #007bff;
+	/* Example different color */
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-top: 20px;
+}
+
+.findid-button:hover {
+	background-color: #0056b3;
+}
+.goback-button {
+	width: 100%;
+	/* Probably full width */
+	padding: 10px;
+	/* Might be different padding */
+	background-color: #bdbebd;	
+
+	/* Example different color */
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-top: 20px;
+}
+
+.goback-button:hover {
+	background-color: #808080;
+}

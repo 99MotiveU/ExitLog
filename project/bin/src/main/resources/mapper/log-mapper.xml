@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.exitlog.log.mapper.LogMapper">
+ 	<resultMap id="logResultMap" type="LogPostDetailDto">
+ 		<id property="logNo" column="LOG_NO"></id>
+ 		<result  property="userNo" column="USER_NO"></result>
+ 		<result  property="nickname" column="NICKNAME" javaType="String"></result>
+ 		<result  property="title" column="TITLE"></result>
+ 		<result  property="content" column="CONTENT"></result>
+ 		<result  property="valText" column="VAL_TEXT"></result>
+ 		<result  property="viewCount" column="VIEW_COUNT"></result>
+ 		<result  property="isDel" column="IS_DEL"></result>
+ 		<result  property="repoCount" column="REPO_COUNT"></result>
+ 		<result  property="createdDate" column="CREATED_DATE"></result>
+ 		<result  property="editedDate" column="EDITED_DATE"></result>
+ 		<result  property="companyName" column="COMPANY_NAME"></result>
+ 		<result  property="userCompanyName" column="USER_COMPANY_NAME"></result>
+ 		<result  property="isCurrentlyEmployed" column="IS_CURRENTLY_EMPLOYED"></result>
+ 		<collection property="tags" ofType="Tag" column="TAG_NO">
+ 			<id property="tagNo" column="TAG_NO"/>
+ 			<result property="tagContent" column="TAG_CONTENT"/>
+ 		</collection>
+ 	</resultMap>
+ 	
+ 	<resultMap id="logListItemDtoResultMap" type="LogListItemDto">
+        <result property="logNo" column="logNo_alias"/>
+        <result property="companyName" column="companyName_alias"/>
+        <result property="title" column="title_alias"/>
+        <result property="nickname" column="nickname_alias"/>
+        <result property="createdDateFormatted" column="createdDateFormatted_alias"/>
+        <result property="viewCount" column="viewCount_alias"/>
+    </resultMap>
+ 	
+ 	<select id="selectAllLogs" resultType="LogPostDetailDto" >
+        SELECT 
+            COMPANY_NAME AS companyName,  TITLE AS title, 
+            CREATED_DATE AS createdDate, 
+            VIEW_COUNT AS viewCount 
+        FROM log
+        ORDER BY CREATED_DATE DESC
+    </select>
+    
+ 	<update id="incrementViewCount" parameterType="int">
+		UPDATE LOG SET VIEW_COUNT = VIEW_COUNT + 1 WHERE LOG_NO = #{logNo}
+	</update>
+	
+ 	<select id="selectLog" parameterType="int" resultMap="logResultMap">
+ 		SELECT L.LOG_NO, U.USER_NO, U.NICKNAME, L.TITLE, L.CONTENT, L.VAL_TEXT, L.VIEW_COUNT, L.IS_DEL,
+ 			L.REPO_COUNT, DATE_FORMAT(L.CREATED_DATE,'%Y-%m-%d') AS CREATED_DATE, DATE_FORMAT(L.EDITED_DATE,'%Y-%m-%d') AS EDITED_DATE, L.COMPANY_NAME, U.COMPANY_NAME AS USER_COMPANY_NAME,
+ 			L.IS_CURRENTLY_EMPLOYED, T.TAG_NO, T.TAG_CONTENT
+ 		FROM LOG L
+ 		JOIN USER U ON L.USER_NO = U.USER_NO
+ 		LEFT JOIN POST_TAG P ON L.LOG_NO =P.LOG_NO 
+ 		LEFT JOIN TAG T ON T.TAG_NO = P.TAG_NO
+ 		WHERE L.LOG_NO = #{logNo} AND L.IS_DEL=0
+ 	</select>
+ 	
+ 	<delete id="deleteComments" parameterType="int">
+		UPDATE COMMENT SET IS_DEL=1 WHERE LOG_NO=#{logNo}
+	</delete>
+ 	<delete id="deleteLog" parameterType="int">
+ 		update log set is_del=1 where log_no = #{logNo}
+ 	</delete>
+ 	 
+ 	<insert id="insertLog" parameterType="LogPostDetailDto" useGeneratedKeys="true" keyProperty="logNo">
+ 		INSERT INTO LOG(USER_NO, TITLE, CONTENT, VAL_TEXT,CREATED_DATE,COMPANY_NAME, IS_CURRENTLY_EMPLOYED) VALUES(#{userNo},#{title},#{content},#{valText},NOW(),#{companyName},#{isCurrentlyEmployed})
+ 	</insert>
+ 	<insert id="insertPostTag">
+ 		INSERT INTO POST_TAG VALUES(#{logNo},#{tagNo})
+ 	</insert>
+ 	
+ 	<select id="getEditLog" parameterType="int" resultType="LogPostDto">
+		SELECT TITLE, CONTENT, VAL_TEXT,COMPANY_NAME FROM LOG WHERE LOG_NO=#{logNo} AND IS_DEL=0
+	</select>
+ 	<update id="editLog">
+ 		UPDATE LOG SET TITLE=#{title}, CONTENT=#{content}, #VAL_TEXT={valText},EDITED_DATE=NOW(), 
+ 		COMPANY_NAME = #{companyName}, IS_CURRENTLY_EMPLOYED=#{isCurrentlyEmployed} WHERE LOG_NO= #{logNo} AND USER_NO = #{userNo}
+ 	</update>
+ 	
+ 	<select id="getLogMyListCount" resultType="int">
+        SELECT COUNT(*) FROM log where USER_NO = #{userNo}
+    </select>
+ 	
+ 	<select id="selectPagedLogs" resultType="LogPostDetailDto">
+        SELECT
+        	LOG_NO AS logNo,
+            COMPANY_NAME AS companyName,  TITLE AS title, 
+            CREATED_DATE AS createdDate, 
+            VIEW_COUNT AS viewCount
+            FROM log
+        ORDER BY CREATED_DATE DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+ 	
+ 	<select id="selectMyPagedLogs" resultType="LogPostDetailDto">
+        SELECT
+        	LOG_NO AS logNo,
+            COMPANY_NAME AS companyName,
+            TITLE AS title, 
+            CREATED_DATE AS createdDate,
+            USER_NO AS userNo, 
+            VIEW_COUNT AS viewCount
+            FROM log
+        WHERE USER_NO = #{userNo}
+        ORDER BY CREATED_DATE DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+    
+    
+    <!-- 로그 전체 목록 조회 -->
+    <select id="findAllLogItemsForList" resultMap="logListItemDtoResultMap">
+        SELECT
+            L.LOG_NO AS logNo_alias,
+            L.COMPANY_NAME AS companyName_alias,
+            L.TITLE AS title_alias,
+            U.NICKNAME AS nickname_alias,
+            DATE_FORMAT(L.CREATED_DATE, '%Y.%m.%d') AS createdDateFormatted_alias,
+            L.VIEW_COUNT AS viewCount_alias
+        FROM
+            LOG L
+        JOIN
+            USER U ON L.USER_NO = U.USER_NO
+        WHERE
+            L.IS_DEL = 0
+        ORDER BY
+            L.CREATED_DATE DESC
+    </select>
+    
+    <!-- 검색 -->
+    <sql id="searchCondition">
+        <if test="keyword != null and keyword != ''">
+            <choose>
+                <when test="searchType == 'title'">
+                    AND L.TITLE LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test="searchType == 'author'">
+                    AND U.NICKNAME LIKE CONCAT('%', #{keyword}, '%')
+                </when>
+                <when test="searchType == 'content'">
+                    AND (L.TITLE LIKE CONCAT('%', #{keyword}, '%') OR L.CONTENT LIKE CONCAT('%', #{keyword}, '%'))
+                </when>
+            </choose>
+        </if>
+    </sql>
+    
+    <select id="findPagedLogItemsForList" resultMap="logListItemDtoResultMap">
+        SELECT
+            L.LOG_NO AS logNo_alias,
+            L.COMPANY_NAME AS companyName_alias,
+            L.TITLE AS title_alias,
+            U.NICKNAME AS nickname_alias,
+            DATE_FORMAT(L.CREATED_DATE, '%Y.%m.%d') AS createdDateFormatted_alias,
+            L.VIEW_COUNT AS viewCount_alias
+        FROM
+            LOG L
+        JOIN
+            USER U ON L.USER_NO = U.USER_NO
+        WHERE
+            L.IS_DEL = 0
+            <include refid="searchCondition"/> ORDER BY
+            L.CREATED_DATE DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+    
+   	<!-- 로그 리스트 페이지네이션용 전체 게시글 수 counting method -->
+ 	<select id="getLogListCount" resultType="int">
+        SELECT
+            COUNT(L.LOG_NO) 
+        FROM
+            LOG L
+        JOIN
+            USER U ON L.USER_NO = U.USER_NO
+        WHERE
+            L.IS_DEL = 0
+            <include refid="searchCondition"/>
+	</select>
+    
+    <!--메인페이지 조회수 높은 로그-->
+	<select id="getPopularLogs" resultMap="logListItemDtoResultMap">
+		    SELECT
+            L.LOG_NO AS logNo_alias,
+            L.COMPANY_NAME AS companyName_alias,
+            L.TITLE AS title_alias,
+            U.NICKNAME AS nickname_alias,
+            DATE_FORMAT(L.CREATED_DATE, '%Y.%m.%d') AS createdDateFormatted_alias,
+            L.VIEW_COUNT AS viewCount_alias
+        FROM
+            LOG L
+        JOIN
+            USER U ON L.USER_NO = U.USER_NO
+        WHERE
+            L.IS_DEL = 0
+            AND YEAR(L.CREATED_DATE) = YEAR(CURDATE())
+    		AND MONTH(L.CREATED_DATE) = MONTH(CURDATE())    
+        ORDER BY
+            L.CREATED_DATE DESC
+        LIMIT 6
+	</select>
+    
+ 	
+ </mapper>

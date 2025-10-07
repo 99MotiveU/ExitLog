@@ -1,0 +1,156 @@
+/* 헤더 기본 스타일 안먹힘 이슈로 추가하는 스타일 */
+ol, ul {
+    padding-left: 2rem;
+}
+
+/* 기본 링크 스타일 */
+header a:hover {
+  text-decoration: none;
+}
+
+.log-list-background{
+  background-color: #f5f7fa;
+}
+
+#log-list-container{
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+}
+
+.log-list-title{
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #343a40;
+  padding-bottom: 15px;
+  text-align: center;
+}
+
+/* 검색창 */
+#search-input {
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+#search-btn {
+  border-radius: 5px;
+}
+/* 작성하기 버튼 */
+#write-log-btn{
+  border-radius: 12px;
+}
+
+/* 게시글 항목 hover 효과 */
+.post-item {
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 3px; /* 약간의 둥근 모서리 */
+  /* padding: 0 16px; */ /* py-3 클래스가 상하 패딩을 제공하므로, 좌우 패딩만 필요시 추가 */
+}
+.post-item:hover {
+  background-color: #e5eeff; /* 연한 하늘색 계열 */
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); */ /* 은은한 그림자 */
+}
+.post-item a.text-dark:hover {
+  color: #0056b3 !important; /* 링크 호버 시 색상 변경 */
+}
+
+/* 게시글 리스트 헤더 스타일 */
+.log-list-header {
+  background-color: #f8f9fa;
+  color: #495057;
+  font-size: 1rem;
+}
+
+/* 헤더 컬럼 너비 및 정렬 (post-item 내부 구조와 유사하게) */
+.log-list-header .log-header-main-content {
+  /* 회사명 + 제목 포함 영역 */
+  flex: 1; /* 남은 공간을 최대한 차지 */
+  min-width: 0; /* flex item 내용이 넘칠 때 줄어들 수 있도록 */
+  text-align: center;
+}
+.log-list-header .log-header-company {
+  flex-basis: 200px; /* 기본 너비 (회사명이 길 경우 대비) */
+  flex-shrink: 0; /* 줄어들지 않음 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.log-list-header .log-header-title {
+  flex-grow: 1; /* 제목이 남은 공간을 모두 차지 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 1rem; /* 회사명과 간격 */
+}
+
+.log-list-header .log-header-meta-content {
+  /* 작성자, 작성일, 조회수 포함 영역 */
+  display: flex;
+  align-items: center;
+  flex-shrink: 0; /* 줄어들지 않음 */
+}
+.log-list-header .log-header-author,
+.log-list-header .log-header-date,
+.log-list-header .log-header-views {
+  text-align: center;
+  color: #6c757d;
+}
+.log-list-header .log-header-author {
+  min-width: 90px;
+}
+.log-list-header .log-header-date {
+  min-width: 100px;
+}
+.log-list-header .log-header-views {
+  min-width: 70px;
+}
+
+/* 게시글 아이템 내부 요소 정렬 및 너비 (헤더와 유사하게) */
+.post-item .post-main-content {
+  /* 회사명 + 제목 포함 영역 */
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+.post-item .post-company {
+  flex-basis: 200px;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.post-item .post-title-link {
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block; /* 한 줄 전체 클릭 가능하도록 */
+  padding-left: 1rem;
+}
+.post-item .post-meta-content {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.post-item .post-author,
+.post-item .post-date,
+.post-item .post-views {
+  text-align: center;
+}
+.post-item .post-author {
+  min-width: 90px;
+}
+.post-item .post-date {
+  min-width: 100px;
+}
+.post-item .post-views {
+  min-width: 70px;
+}
+
+/* 페이지네이션 스타일 */
+.log-pagination .pagination .page-item .page-link {
+  display: flex;
+  border-radius: 5px; 
+  margin: 0 3px;
+}

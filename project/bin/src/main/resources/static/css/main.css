@@ -1,0 +1,207 @@
+.container{
+    font-family: 'Pretendard';
+
+}
+.main-content-wrapper {
+  padding: 40px 0;
+}
+
+
+.left-section {
+  flex: 1;
+}
+
+.right-section {
+  flex: 2;
+}
+
+
+.log-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); 
+  gap: 16px;
+}
+
+
+.popular-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+
+.job-card {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal; 
+  word-wrap: break-word;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 0.05);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 80px; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.job-card:hover {
+  box-shadow: 0 10px 20px rgb(0 0 0 / 0.1);
+  transform: translateY(-5px);
+}
+
+.log-content{
+    margin-bottom: 0.2rem !important;
+}
+.log-meta-row {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  flex-wrap: wrap; /* 모바일 대응 */
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+
+.log-company {
+  display: inline-block;      
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+  background-color: #eef4ff; /* 연한 파랑 배경 */
+  color: #2b73ec;             /* 강조 텍스트 색상 */
+  padding: 2px 2px;
+  border-radius: 6px;
+}
+.meta-views{
+  position: absolute;
+  right: 0;
+  top: 15px;
+  font-size: 0.85rem;
+  color: #666;
+
+}
+
+.job-meta {
+  width:100%;
+  font-size: 0.85rem;
+  color: #999;
+  margin-bottom: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;      
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+.job-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.company {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.location {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.apply-button {
+  align-self: flex-start;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 3px 8px rgb(0 123 255 / 0.4);
+}
+
+.apply-button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 5px 15px rgb(0 86 179 / 0.6);
+}
+
+/* 태블릿 이하 (768px 이하일 때 레이아웃 변경) */
+@media (max-width: 768px) {
+  .popular-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .job-card {
+    padding: 16px;
+    min-height: 100px;
+  }
+
+  .job-title {
+    font-size: 1rem;
+    white-space: normal; /* 모바일에서 말줄임 대신 줄바꿈 */
+  }
+
+  .location,
+  .job-meta {
+    white-space: normal;
+    -webkit-line-clamp: 2;
+  }
+
+  .apply-button {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+  }
+}
+
+/* 모바일 (480px 이하) */
+@media (max-width: 480px) {
+  .popular-grid,
+  .log-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .main-content-wrapper {
+    padding: 20px 0;
+  }
+
+  .job-card {
+    padding: 14px;
+    min-height: auto;
+  }
+
+  .job-title {
+    font-size: 0.95rem;
+  }
+
+  .company,
+  .location,
+  .job-meta {
+    font-size: 0.8rem;
+  }
+
+  .apply-button {
+    width: 100%; /* 전체 너비 버튼 */
+    text-align: center;
+  }
+}
+

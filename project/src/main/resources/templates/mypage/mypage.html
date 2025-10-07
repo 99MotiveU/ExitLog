@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ExitLog - 마이페이지</title>
+	<link rel="stylesheet" th:href="@{/css/layoutcss.css}">
+	<link rel="stylesheet" th:href="@{/css/mypage/mypage.css}">
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+	
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+	<div th:replace="~{layout/header :: header}"></div>
+
+	<main class="container">
+		<div class="welcome-message">
+			<span th:text="${userInfo.nickname}">기본값</span>
+			고객님 안녕하세요!
+		</div>
+
+		<div class="content-area">
+			<aside class="sidebar">
+				<ul>
+					<li>
+						<a href="#" class="sidebar-link active" data-target="mypage_mylogs_content">
+							내가 쓴 로그
+						</a>
+					</li>
+					<li>
+						<a href="#" class="sidebar-link" data-target="mypage_info_content">
+							회원정보 수정
+						</a>
+					</li>
+					<li>
+						<a href="#" class="sidebar-link" data-target="mypage_pwfix_content">
+							비밀번호 설정
+						</a>
+					</li>
+					<li>
+						<a href="#" class="sidebar-link" data-target="mypage_secession_content">
+							탈퇴하기
+						</a>
+					</li>
+				</ul>
+			</aside>
+
+			<section class="main-content">
+				<div id="mypage_mylogs_content" class="mypage-content-section active">
+					<h2>내가 쓴 로그</h2>
+
+					<th:block th:if="${not #lists.isEmpty(logList)}">
+						<div class="log-list-header">
+							<div class="header-company">회사명</div>
+							<div class="header-title">제목</div>
+							<div class="header-meta">
+								<span class="header-date">작성일</span>
+								<span class="header-views">조회수</span>
+							</div>
+						</div>
+						<div class="log-list">
+							<a th:each="log : ${logList}" th:href="@{/log/{logNo}(logNo=${log.logNo})}"
+								class="log-item-link">
+								<div class="log-item" th:data-log-no="${log.logNo}">
+									<div class="log-company" th:text="${log.companyName}"></div>
+									<div class="log-titles" th:text="${log.title}"></div>
+									<div class="log-metas">
+										<span class="log-date"
+											th:text="${#dates.format(log.createdDate, 'yyyy. MM. dd')}">2025. 05.
+											28</span>
+										<i class="fa-regular fa-eye"></i>
+										<span class="log-views" th:text="${log.viewCount}">77</span>
+									</div>
+								</div>
+							</a>
+							<nav th:if="${pagination != null && pagination.maxPage > 0}" aria-label="Page navigation"
+								class="d-flex justify-content-center mt-4 mypage-log-pagination">
+								<ul class="pagination">
+									<li class="page-item"
+										th:classappend="${pagination.currentPage == 1} ? 'disabled' : ''">
+										<a class="page-link"
+											th:href="@{/mypage(page=1, limit=${pagination.limit}, pageSize=${pagination.pageSize})}">
+											<i class="fa-solid fa-backward"></i><span class="sr-only">First</span>
+										</a>
+									</li>
+									<li class="page-item"
+										th:classappend="${pagination.currentPage == 1} ? 'disabled' : ''">
+										<a class="page-link"
+											th:href="@{/mypage(page=${pagination.prevPage}, limit=${pagination.limit}, pageSize=${pagination.pageSize})}">
+											<i class="fa-solid fa-caret-left"></i><span class="sr-only">Previous</span>
+										</a>
+									</li>
+
+									<li th:each="pageNum : ${#numbers.sequence(pagination.startPage, pagination.endPage)}"
+										class="page-item"
+										th:classappend="${pageNum == pagination.currentPage} ? 'active' : ''">
+										<a class="page-link"
+											th:href="@{/mypage(page=${pageNum}, limit=${pagination.limit}, pageSize=${pagination.pageSize})}"
+											th:text="${pageNum}">1</a>
+									</li>
+
+									<li class="page-item"
+										th:classappend="${pagination.currentPage == pagination.maxPage} ? 'disabled' : ''">
+										<a class="page-link"
+											th:href="@{/mypage(page=${pagination.nextPage}, limit=${pagination.limit}, pageSize=${pagination.pageSize})}">
+											<i class="fa-solid fa-caret-right"></i><span class="sr-only">Next</span>
+										</a>
+									</li>
+									<li class="page-item"
+										th:classappend="${pagination.currentPage == pagination.maxPage} ? 'disabled' : ''">
+										<a class="page-link"
+											th:href="@{/mypage(page=${pagination.maxPage}, limit=${pagination.limit}, pageSize=${pagination.pageSize})}">
+											<i class="fa-solid fa-forward"></i><span class="sr-only">Last</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</th:block>
+
+					<th:block th:if="${#lists.isEmpty(logList)}">
+						<div class="no-log-message">
+							<p>등록된 게시물이 없습니다.</p>
+						</div>
+					</th:block>
+				</div>
+
+				<div id="mypage_info_content" class="mypage-content-section">
+					<h2>회원정보 수정</h2>
+					<form class="info-form">
+						<div class="form-row">
+							<label for="companyName" class="form-label">회사명</label>
+							<div class="form-input">
+								<input type="text" id="companyName" class="form-label-input"
+									th:value="${userInfo.companyName}"
+									th:attr="placeholder=${userInfo.companyName != null} ? ${userInfo.companyName} : '재직 인증이 확인되면, 회사 정보가 자동으로 업데이트됩니다.'"
+									readonly>
+							</div>
+						</div>
+
+						<div class="form-row">
+							<label for="employmentCertificate" class="form-label">재직 증명서 제출</label>
+							<div class="form-input input-with-file-button">
+								<input type="text" class="form-label-input file-name" id="employmentCertificate"
+									placeholder="선택된 파일 없음" readonly="true" />
+								<button type="button" class="btn btn-primary" id="submitEmploymentCertBtn">제출</button>
+							</div>
+						</div>
+
+						<div class="form-row">
+							<label for="nickname" class="form-label">닉네임</label>
+							<div class="form-input-wrapper">
+								<div class="form-input input-with-button-nick">
+									<input type="text" class="form-label-input-nick" id="nickname"
+										th:value="${userInfo.nickname}"
+										th:placeholder="${userInfo.nickname != null ? userInfo.nickname : '닉네임'}"
+										readonly>
+									<button type="button" class="btn btn-primary" id="checkNicknameButton">중복
+										확인</button>
+								</div>
+								<p class="validation-message error" id="nicknameValidationMessage"
+									style="display: none;">이미 등록된 닉네임입니다.</p>
+							</div>
+						</div>
+
+						<div class="form-row">
+							<label for="email" class="form-label">이메일</label>
+							<div class="form-input-wrapper">
+								<div class="form-input input-with-button-email">
+									<input type="email" class="form-label-input" id="email" th:value="${userInfo.email}"
+										th:placeholder="${userInfo.email != null ? userInfo.email : '이메일 주소를 입력하세요'}"
+										readonly>
+									<button type="button" class="btn btn-primary" id="sendEmailVerificationButton">이메일
+										인증</button>
+								</div>
+								<p id="emailValidationMessage" class="validation-message error" style="display: none;">
+									유효한 이메일 형식이 아닙니다.</p>
+								<p id="emailVerificationMessage" class="validation-message success"
+									style="display: none;">인증 메일이 발송되었습니다. 인증번호를 입력해주세요.</p>
+							</div>
+						</div>
+
+						<div class="form-row" id="verificationCodeSection" style="display: none;">
+							<label for="verificationCodeInput" class="form-label">인증번호 입력</label>
+							<div class="form-input-wrapper">
+								<div class="form-input input-with-button-email">
+									<input type="text" class="form-label-input" id="verificationCodeInput"
+										placeholder="인증번호">
+									<button type="button" class="btn btn-primary" id="checkVerificationCodeButton">인증번호
+										확인</button>
+								</div>
+								<p id="emailTimer" class="validation-message" style="display: none;"></p>
+								<p id="authCodeValidationMessage" class="validation-message error"
+									style="display: none;"></p>
+							</div>
+
+						</div>
+
+					</form>
+
+					<div class="edit-btn button-group">
+						<button type="button" class="btn btn-gray" id="editButton">수정</button>
+						<button type="submit" class="btn btn-blue" id="saveButton">저장</button>
+					</div>
+				</div>
+				<div id="mypage_pwfix_content" class="mypage-content-section">
+					<h2>비밀번호 변경</h2>
+					<form class="password-change-form">
+						<div class="form-group-vertical">
+							<label for="currentPassword" class="form-label">현재 비밀번호 입력</label>
+							<div class="form-input form-passwd relative-container">
+								<input type="password" id="currentPasswordInput" placeholder="현재 비밀번호를 입력해주세요."
+									autocomplete="current-password">
+								<p class="validation-message error" id="currentPasswordError"></p>
+							</div>
+						</div>
+
+						<div class="form-group-vertical">
+							<label for="newPassword" class="form-label">변경 비밀번호 입력</label>
+							<div class="form-input form-passwd relative-container">
+								<input type="password" id="newPassword" placeholder="변경할 비밀번호를 입력해주세요."
+									autocomplete="new-password">
+								<p class="validation-message error" id="newPasswordFormatError"></p>
+							</div>
+						</div>
+
+						<div class="form-group-vertical">
+							<label for="confirmNewPassword" class="form-label">변경 비밀번호 확인</label>
+							<div class="form-input form-passwd relative-container">
+								<input type="password" id="confirmNewPassword" placeholder="변경할 비밀번호를 다시 입력해주세요."
+									autocomplete="new-password">
+								<p class="validation-message error" id="passwordMatchError"></p>
+							</div>
+						</div>
+
+						<div class="button-group password-change-button-group">
+							<button type="submit" class="btn btn-primary btn-full-width"
+								id="changePasswordSubmitButton">비밀번호 변경</button>
+						</div>
+					</form>
+				</div>
+				<div id="mypage_secession_content" class="mypage-content-section">
+					<h2>회원 탈퇴</h2>
+					<p>회원 탈퇴를 진행하시면 계정 정보가 영구적으로 삭제됩니다. 신중하게 결정해주세요.</p>
+					<button type="button" class="btn btn-danger" id="secessionProcessButton">회원 탈퇴 진행</button>
+				</div>
+			</section>
+		</div>
+	</main>
+	<div th:replace="~{layout/footer :: footer}"></div>
+
+	<div id="password-modal" class="modal hidden">
+		<div class="modal-content">
+			<span class="close-button" id="closePasswordModal">&times;</span>
+			<h2>비밀번호 인증</h2>
+			<form id="passwordAuthForm">
+				<input type="password" id="current-password" class="btn-password" placeholder="현재 비밀번호"
+					autocomplete="current-password"> <button type="button" id="authenticate-password">확인</button>
+				<p id="auth-message" class="error-message"></p>
+			</form>
+		</div>
+	</div>
+
+	<div id="employmentVerificationModal" class="modal hidden">
+		<div class="modal-content">
+			<span class="close-button" id="employmentUploadModalClose">&times;</span>
+			<h2>재직 인증하기</h2>
+
+			<div class="modal-form-row">
+				<label for="modalCompanyName" class="modal-label">회사명</label>
+				<input type="text" id="modalCompanyName" class="modal-input" placeholder="회사명을 입력하세요"
+					autocomplete="off">
+			</div>
+			<div class="modal-form-row">
+				<label class="modal-label">인증 서류</label>
+				<div class="modal-file-upload">
+					<input type="file" id="modalCertDoc" class="hidden-file-input"
+						accept="image/jpg, image/jpeg, image/png, image/gif, image/bmp, image/webp" />
+
+					<button type="button" class="btn-file-select" id="modalSelectFileBtn">파일 선택</button>
+					<span class="file-name" id="modalSelectedFileName">선택된 파일 없음</span>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-blue" id="submitModalVerificationBtn">제출하기</button>
+		</div>
+	</div>
+
+	<div id="secessionConfirmModal" class="modal hidden">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3>회원 탈퇴 확인</h3>
+				<span class="close-button" id="secessionModalClose">&times;</span>
+			</div>
+
+			<div class="modal-body">
+				<p>정말로 탈퇴하시겠습니까?</p>
+				<p>탈퇴 시 모든 정보는 삭제되며 복구할 수 없습니다. 신중하게 결정해주세요.</p>
+			</div>
+
+			<div class="modal-footer button-group">
+				<button type="button" class="btn btn-secondary" id="secessionCancelButton">아니요</button>
+				<button type="button" class="btn btn-danger" id="secessiondeleteButton">네, 탈퇴하겠습니다</button>
+			</div>
+		</div>
+	</div>
+
+
+	<script th:src="@{/js/mypage/handlers.js}"></script>
+	<script th:src="@{/js/mypage/declarations.js}"></script>
+
+
+</body>
+
+</html>

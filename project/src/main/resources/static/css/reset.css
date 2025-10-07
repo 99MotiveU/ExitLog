@@ -1,0 +1,67 @@
+/* reset.css 또는 <style> 태그 내부에 사용 */
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+/* 기본적인 박스 모델링을 border-box로 설정 */
+html {
+  box-sizing: border-box;
+  font-size: 16px; /* 기본 폰트 크기 설정 (선택 사항) */
+}
+
+*, *:before, *:after {
+  box-sizing: inherit; /* 모든 요소와 가상 요소에 border-box 상속 */
+}
+
+/* 기본 마진과 패딩 제거 */
+body, h1, h2, h3, h4, h5, h6, p, ol, ul, li, figure, figcaption, blockquote, dl, dd {
+  margin: 0;
+  padding: 0;
+}
+
+/* 목록 스타일 제거 */
+ol, ul {
+  list-style: none;
+}
+
+/* 기본 글꼴 스타일 초기화 (상속을 통해 body에서 설정) */
+body {
+  line-height: 1.5; /* 기본 줄 간격 설정 (선택 사항) */
+  font-family: 'Pretendard-Regular';
+  color: #343a40; /* 기본 글자색 (선택 사항) */
+}
+
+/* 이미지 반응형 처리 (선택 사항) */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 기본 텍스트 데코레이션 및 테두리 제거 */
+a {
+  text-decoration: none;
+  color: inherit; /* 링크 색상 상속 (선택 사항) */
+}
+
+button, input, select, textarea {
+  font: inherit; /* 폼 요소 글꼴 상속 */
+  margin: 0; /* 폼 요소 기본 마진 제거 */
+  border: none; /* 폼 요소 기본 테두리 제거 (디자인에 따라 조정) */
+  outline: none; /* 폼 요소 기본 아웃라인 제거 (접근성을 위해 커스텀 아웃라인 제공 권장) */
+}
+
+/* 테이블 기본 스타일 초기화 */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* HTML5 시맨틱 요소들을 블록 레벨로 처리 (구형 브라우저 호환성) */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}

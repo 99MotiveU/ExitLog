@@ -1,0 +1,59 @@
+    <!-- log_form.html -->
+<form th:action="@{${actionUrl}}" th:method="${method}" id="form" class="container" th:fragment="logForm(log, actionUrl, method, buttonText)">
+    <a role="button" href="/log">뒤로가기</a>
+    
+    <!-- 제목 -->
+    <input name="title" class="form-control" placeholder="제목을 입력해주세요" required
+           th:value="${log != null ? log.title : ''}" />
+    
+    <div>
+        <!-- 회사명 -->
+        <input name="companyName" class="form-control companyName" placeholder="회사명 입력"
+               th:value="${log != null} ? ${log.companyName} : ''" />
+        <div>
+            <div class="checkbox-row">
+                <input type="checkbox" name="isCurrentlyEmployed" id="employed" value="true"
+                       th:checked="${log != null} ? ${log.isCurrentlyEmployed} : false" />
+                <label for="employed" class="mb-0">재직중인 회사입니다.</label>
+            </div>
+            <div class="checkbox-desc">(재직 인증을 한 경우에만 유효합니다)</div>
+        </div>
+    </div>
+
+    <!-- 에디터 (예: content) -->
+    <div id="editor" th:utext="${log != null} ? ${log.content} : ''"></div>
+
+    <div>
+        <label for="valText" class="title3">나만 아는 회사 tmi</label>
+        <textarea id="valText" name="valText" rows="2" maxlength="200" class="form-control"
+                  th:text="${log != null} ? ${log.valText} : ''"></textarea>
+    </div>
+
+    <div>
+        <label for="tag-component" class="title3">태그를 선택해주세요</label>
+        <div id="tag-container" class="tag-area">
+            <!-- 태그 버튼들: 선택된 태그는 CSS 클래스 등으로 표시 가능 -->
+            <button type="button" class="tag-component " data-id="1">💰 최고의 연봉</button>
+            <button type="button" class="tag-component" data-id="2">🎁복지 끝판왕</button>
+            <button type="button" class="tag-component" data-id="3">🤝 인생 최고의 동료</button>
+            <button type="button" class="tag-component" data-id="4">🏖️ 워라밸 굿</button>
+            <button type="button" class="tag-component" data-id="5">🌱 성장 기회 많음</button>
+            <button type="button" class="tag-component" data-id="6">🧑‍🤝‍🧑 수평적인 문화</button>
+            <button type="button" class="tag-component" data-id="7">🏢 근무 환경 최고</button>
+            <button type="button" class="tag-component" data-id="8">🕊️ 자율적인 분위기</button>
+            <button type="button" class="tag-component" data-id="9">💼 탄탄한 비즈니스</button>
+            <button type="button" class="tag-component" data-id="10">🌍 다양성 존중</button>
+            <button type="button" class="tag-component" data-id="11">🌙 야근 잦음</button>
+            <button type="button" class="tag-component" data-id="12">👴 꼰대문화</button>
+            <button type="button" class="tag-component" data-id="13">⚠️ 복지 미흡</button>
+            <button type="button" class="tag-component" data-id="14">📉 일만 많고 성장 없음</button>
+            <button type="button" class="tag-component" data-id="15">❌ 불합리한 평가</button>
+            <button type="button" class="tag-component" data-id="16">🔕 소통 부족</button>
+            <button type="button" class="tag-component" data-id="17">🚪 폐쇄적인 문화</button>
+            <button type="button" class="tag-component" data-id="18">💸 연봉 불만</button>
+            <button type="button" class="tag-component" data-id="19">🎭 보여주기식 문화</button>
+        </div>
+    </div>
+
+    <button class="submit-btn" type="submit" th:text="${buttonText}">작성하기</button>
+</form>
